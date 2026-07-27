@@ -268,7 +268,7 @@ Course certificate | https://example.com/cert"></textarea>
           <label>Attachment screenshot <span class="soft">(optional)</span></label>
           <div class="upload-row">
             <label class="upload-btn" for="f-att-img">📤 Choose image…</label>
-            <input type="file" id="f-att-img" accept="image/*" hidden>
+            <input type="file" id="f-att-img" accept="image/*,.pdf,application/pdf" hidden>
             <span id="img-state" class="hint" style="margin:0">no image chosen</span>
           </div>
           <div id="img-preview-wrap" hidden>
@@ -282,14 +282,14 @@ Course certificate | https://example.com/cert"></textarea>
               <div><button id="img-remove" class="danger" type="button">✕ Remove image</button></div>
             </div>
           </div>
-          <p class="hint">Compressed in your browser (JPEG, max 1200px wide). It travels inside the copied request — Claude saves it to <span style="font-family:var(--mono)">attachments/</span> and makes the 📎 chip clickable.</p>
+          <p class="hint">Image or PDF (≤1.5 MB). Images are compressed in your browser; a PDF travels as-is and Claude converts its first page. It goes inside the copied request — Claude saves it to <span style="font-family:var(--mono)">attachments/</span> and makes the 📎 chip clickable.</p>
         </div>
 
         <div class="field">
           <label>Certificate <span class="soft">(optional — shown as a framed image on the card)</span></label>
           <div class="upload-row">
             <label class="upload-btn" for="f-cert-img">🎓 Choose certificate…</label>
-            <input type="file" id="f-cert-img" accept="image/*" hidden>
+            <input type="file" id="f-cert-img" accept="image/*,.pdf,application/pdf" hidden>
             <span id="cert-state" class="hint" style="margin:0">no certificate chosen</span>
           </div>
           <div id="cert-preview-wrap" hidden>
@@ -307,7 +307,7 @@ Course certificate | https://example.com/cert"></textarea>
             <label for="f-cert-title">Certificate title <span class="soft">(caption under the image)</span></label>
             <input id="f-cert-title" placeholder="e.g. AI and Developer Productivity — certificate">
           </div>
-          <p class="hint">Shows on the card as a certificate image view; clicking opens it full-size.</p>
+          <p class="hint">Image or PDF (≤1.5 MB). Shows on the card as a certificate image view — for a PDF, Claude converts the first page. Clicking opens it full-size.</p>
         </div>
 
         <div class="btns">
@@ -394,6 +394,14 @@ Course certificate | https://example.com/cert"></textarea>
   }
   function imageBlock() {
     if (!image) return [];
+    if (image.isPdf) {
+      var base = imgRepoPath().replace(/\.jpg$/, '');
+      return ['', '--- attachment PDF (base64 data URL) ---',
+        'convert the FIRST PAGE to JPEG and save as: ' + base + '.jpg',
+        'also keep the original PDF as: ' + base + '.pdf',
+        image.dataUrl,
+        '--- end attachment PDF ---'];
+    }
     return ['', '--- attachment image (base64 JPEG data URL) ---',
       'save as: ' + imgRepoPath(),
       image.dataUrl,
@@ -401,6 +409,14 @@ Course certificate | https://example.com/cert"></textarea>
   }
   function certBlock() {
     if (!certImage) return [];
+    if (certImage.isPdf) {
+      var cbase = certRepoPath().replace(/\.jpg$/, '');
+      return ['', '--- certificate PDF (base64 data URL) ---',
+        'convert the FIRST PAGE to JPEG and save as: ' + cbase + '.jpg',
+        'also keep the original PDF as: ' + cbase + '.pdf',
+        certImage.dataUrl,
+        '--- end certificate PDF ---'];
+    }
     return ['', '--- certificate image (base64 JPEG data URL) ---',
       'save as: ' + certRepoPath(),
       certImage.dataUrl,
@@ -528,10 +544,11 @@ Course certificate | https://example.com/cert"></textarea>
     image = next;
     $('img-preview-wrap').hidden = !image;
     if (image) {
-      $('img-preview').src = image.dataUrl;
-      $('img-size').textContent = image.kb + ' KB after compression';
+      $('img-preview').style.display = image.isPdf ? 'none' : '';
+      if (!image.isPdf) $('img-preview').src = image.dataUrl;
+      $('img-size').textContent = image.kb + ' KB' + (image.isPdf ? ' PDF — Claude converts the first page to an image' : ' after compression');
       if (!$('f-img-name').value) $('f-img-name').value = slug(val('f-att-file') || val('f-title')) + '.jpg';
-      $('img-state').textContent = 'image ready';
+      $('img-state').textContent = image.isPdf ? 'PDF ready' : 'image ready';
     } else {
       $('img-state').textContent = existingImagePath ? 'current: ' + existingImagePath + ' (upload to replace)' : 'no image chosen';
       $('f-img-name').value = '';
@@ -543,10 +560,11 @@ Course certificate | https://example.com/cert"></textarea>
     certImage = next;
     $('cert-preview-wrap').hidden = !certImage;
     if (certImage) {
-      $('cert-preview').src = certImage.dataUrl;
-      $('cert-size').textContent = certImage.kb + ' KB after compression';
+      $('cert-preview').style.display = certImage.isPdf ? 'none' : '';
+      if (!certImage.isPdf) $('cert-preview').src = certImage.dataUrl;
+      $('cert-size').textContent = certImage.kb + ' KB' + (certImage.isPdf ? ' PDF — Claude converts the first page to an image' : ' after compression');
       if (!$('f-cert-name').value) $('f-cert-name').value = slug((val('f-cert-title') || val('f-title')) + ' certificate') + '.jpg';
-      $('cert-state').textContent = 'certificate ready';
+      $('cert-state').textContent = certImage.isPdf ? 'certificate PDF ready' : 'certificate ready';
     } else {
       $('cert-state').textContent = certExistingPath ? 'current: ' + certExistingPath + ' (upload to replace)' : 'no certificate chosen';
       $('f-cert-name').value = '';
@@ -620,6 +638,21 @@ Course certificate | https://example.com/cert"></textarea>
 
   // ---------- image processing ----------
   function processImageFile(file) {
+    var isPdf = (file.type === 'application/pdf') || /\.pdf$/i.test(file.name || '');
+    if (isPdf) {
+      return new Promise(function (resolve, reject) {
+        if (file.size > 1600 * 1024) {
+          reject(new Error('PDF is too large (max ~1.5 MB) — compress it or upload a screenshot of it instead.'));
+          return;
+        }
+        var reader = new FileReader();
+        reader.onerror = function () { reject(new Error('Could not read the file.')); };
+        reader.onload = function () {
+          resolve({ dataUrl: reader.result, kb: Math.round(file.size / 1024), isPdf: true });
+        };
+        reader.readAsDataURL(file);
+      });
+    }
     return new Promise(function (resolve, reject) {
       var reader = new FileReader();
       reader.onerror = function () { reject(new Error('Could not read the file.')); };
@@ -635,7 +668,7 @@ Course certificate | https://example.com/cert"></textarea>
           var dataUrl = canvas.toDataURL('image/jpeg', 0.8);
           if (dataUrl.length > 850 * 1024) dataUrl = canvas.toDataURL('image/jpeg', 0.62);
           if (dataUrl.length > 950 * 1024) { reject(new Error('Image is still too large — crop it tighter and retry.')); return; }
-          resolve({ dataUrl: dataUrl, kb: Math.round(dataUrl.length * 3 / 4 / 1024) });
+          resolve({ dataUrl: dataUrl, kb: Math.round(dataUrl.length * 3 / 4 / 1024), isPdf: false });
         };
         img.src = reader.result;
       };
