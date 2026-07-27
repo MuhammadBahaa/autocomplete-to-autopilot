@@ -25,6 +25,9 @@
        image: 'attachments/pic.png' } — adds a 📎 email-style chip at
        the card's bottom; with image, a clickable thumbnail opens it
        full-size (missing image files degrade to the plain chip).
+     certificate: { title: 'Course name', image: 'attachments/cert.jpg' }
+       — shows the certificate as a framed image view on the card
+       (click to zoom). Upload it via the Milestone Composer.
    ============================================================= */
 
 window.CONFIG = {

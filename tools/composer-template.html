@@ -145,8 +145,8 @@
     border-radius: 10px; padding: 8px 14px; font-size: 13.5px; color: var(--muted);
   }
   .upload-btn:hover { border-color: var(--accent); color: var(--ink); }
-  #img-preview-wrap { display: flex; gap: 12px; align-items: flex-start; margin-top: 10px; }
-  #img-preview { width: 120px; height: auto; border-radius: 8px; border: 1px solid var(--border); display: block; }
+  #img-preview-wrap, #cert-preview-wrap { display: flex; gap: 12px; align-items: flex-start; margin-top: 10px; }
+  #img-preview, #cert-preview { width: 120px; height: auto; border-radius: 8px; border: 1px solid var(--border); display: block; }
   .badge { font-family: var(--mono); font-size: 11px; color: var(--faint); }
   .img-meta { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 160px; }
 
@@ -247,11 +247,6 @@
         </div>
 
         <div class="field">
-          <label for="f-skills">Skills <span class="soft">(comma-separated, optional)</span></label>
-          <input id="f-skills" placeholder="empty = let Claude suggest from the description">
-        </div>
-
-        <div class="field">
           <label for="f-resources">Resources <span class="soft">(one per line, optional)</span></label>
           <textarea id="f-resources" style="min-height:64px" placeholder="my-skill-name
 Course certificate | https://example.com/cert"></textarea>
@@ -288,6 +283,31 @@ Course certificate | https://example.com/cert"></textarea>
             </div>
           </div>
           <p class="hint">Compressed in your browser (JPEG, max 1200px wide). It travels inside the copied request — Claude saves it to <span style="font-family:var(--mono)">attachments/</span> and makes the 📎 chip clickable.</p>
+        </div>
+
+        <div class="field">
+          <label>Certificate <span class="soft">(optional — shown as a framed image on the card)</span></label>
+          <div class="upload-row">
+            <label class="upload-btn" for="f-cert-img">🎓 Choose certificate…</label>
+            <input type="file" id="f-cert-img" accept="image/*" hidden>
+            <span id="cert-state" class="hint" style="margin:0">no certificate chosen</span>
+          </div>
+          <div id="cert-preview-wrap" hidden>
+            <img id="cert-preview" alt="Certificate preview">
+            <div class="img-meta">
+              <div>
+                <label for="f-cert-name">Save in repo as</label>
+                <input id="f-cert-name">
+              </div>
+              <span class="badge" id="cert-size"></span>
+              <div><button id="cert-remove" class="danger" type="button">✕ Remove certificate</button></div>
+            </div>
+          </div>
+          <div style="margin-top:10px">
+            <label for="f-cert-title">Certificate title <span class="soft">(caption under the image)</span></label>
+            <input id="f-cert-title" placeholder="e.g. AI and Developer Productivity — certificate">
+          </div>
+          <p class="hint">Shows on the card as a certificate image view; clicking opens it full-size.</p>
         </div>
 
         <div class="btns">
@@ -331,11 +351,13 @@ Course certificate | https://example.com/cert"></textarea>
 (function () {
   var $ = function (id) { return document.getElementById(id); };
   var EXISTING = Array.isArray(window.EXISTING) ? window.EXISTING : [];
-  var fields = ['f-title', 'f-date', 'f-category', 'f-desc', 'f-skills', 'f-resources', 'f-att-file', 'f-att-note'];
-  var KEY = 'milestone-composer-draft-v2';
+  var fields = ['f-title', 'f-date', 'f-category', 'f-desc', 'f-resources', 'f-att-file', 'f-att-note', 'f-cert-title'];
+  var KEY = 'milestone-composer-draft-v3';
   var mode = { type: 'new', index: -1 };
   var image = null; // { dataUrl, kb }
   var existingImagePath = ''; // for edit mode
+  var certImage = null;
+  var certExistingPath = '';
 
   function val(id) { return $(id).value.trim(); }
   function q(s) { return "'" + String(s).replace(/\\/g, '\\\\').replace(/'/g, "\\'") + "'"; }
@@ -343,13 +365,14 @@ Course certificate | https://example.com/cert"></textarea>
     return String(s || '').toLowerCase().replace(/\.[a-z0-9]+$/, '')
       .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'attachment';
   }
-  function parseSkills() {
-    return val('f-skills') ? val('f-skills').split(',').map(function (s) { return s.trim(); }).filter(Boolean) : [];
+  function currentSkills() {
+    return (mode.type === 'edit' && EXISTING[mode.index]) ? (EXISTING[mode.index].skills || []) : [];
   }
   function parseResources() {
     return val('f-resources') ? val('f-resources').split('\n').map(function (s) { return s.trim(); }).filter(Boolean) : [];
   }
   function imgRepoPath() { return 'attachments/' + (val('f-img-name') || slug(val('f-att-file') || val('f-title')) + '.jpg'); }
+  function certRepoPath() { return 'attachments/' + (val('f-cert-name') || slug((val('f-cert-title') || val('f-title')) + ' certificate') + '.jpg'); }
 
   // ---------- request builders ----------
   function fieldLines() {
@@ -358,11 +381,14 @@ Course certificate | https://example.com/cert"></textarea>
     lines.push('date: ' + (val('f-date') || '(missing — ask me)'));
     lines.push('category: ' + (val('f-category') || '(pick the best fit)'));
     lines.push('description (rough): ' + (val('f-desc') || '(missing — ask me)'));
-    lines.push('skills: ' + (parseSkills().join(', ') || '(suggest from the description)'));
+    lines.push('skills: ' + (mode.type === 'edit' ? '(keep the existing skills)' : '(suggest from the description)'));
     var res = parseResources();
     lines.push('resources: ' + (res.length ? res.join(' ; ') : '(none)'));
     if (val('f-att-file') || val('f-att-note')) {
       lines.push('attachment: file=' + (val('f-att-file') || '(name it)') + ' — caption: ' + (val('f-att-note') || '(write a playful one)'));
+    }
+    if (certImage || val('f-cert-title') || certExistingPath) {
+      lines.push('certificate: title=' + (val('f-cert-title') || '(use the course/credential name)') + ' — shown as a framed image view on the card');
     }
     return lines;
   }
@@ -372,6 +398,13 @@ Course certificate | https://example.com/cert"></textarea>
       'save as: ' + imgRepoPath(),
       image.dataUrl,
       '--- end attachment image ---'];
+  }
+  function certBlock() {
+    if (!certImage) return [];
+    return ['', '--- certificate image (base64 JPEG data URL) ---',
+      'save as: ' + certRepoPath(),
+      certImage.dataUrl,
+      '--- end certificate image ---'];
   }
   var FOOTER = 'Finally: verify locally, push, confirm the live URL, and rebuild + republish the Milestone Composer snapshot (tools/build-composer.mjs).';
   var POLISH = 'My rough input — please: correct my English, rephrase it in the site’s voice, and expand the description using your own knowledge of the tools/concepts I mention (stay accurate; do not invent personal claims, metrics, or results I didn’t state):';
@@ -394,7 +427,10 @@ Course certificate | https://example.com/cert"></textarea>
     if (mode.type === 'edit' && existingImagePath && !image) {
       lines.push('attachment image: keep the current one (' + existingImagePath + ')');
     }
-    lines = lines.concat(imageBlock());
+    if (mode.type === 'edit' && certExistingPath && !certImage) {
+      lines.push('certificate image: keep the current one (' + certExistingPath + ')');
+    }
+    lines = lines.concat(imageBlock()).concat(certBlock());
     lines.push('');
     lines.push(FOOTER);
     return lines.join('\n');
@@ -404,7 +440,7 @@ Course certificate | https://example.com/cert"></textarea>
     return 'Remove the milestone "' + orig.title + '" (date ' + orig.date + ') from milestones.js on my AI Milestones site (repo MuhammadBahaa/autocomplete-to-autopilot).\n\n' + FOOTER;
   }
   function buildRaw() {
-    var skills = parseSkills();
+    var skills = currentSkills();
     var res = parseResources().map(function (r) {
       var parts = r.split('|').map(function (p) { return p.trim(); });
       return parts.length > 1 ? '{ label: ' + q(parts[0]) + ', url: ' + q(parts[1]) + ' }' : q(parts[0]);
@@ -425,6 +461,13 @@ Course certificate | https://example.com/cert"></textarea>
       if (img) out.push('    image: ' + q(img) + ',');
       out.push('  },');
     }
+    var certImg = certImage ? certRepoPath() : certExistingPath;
+    if (certImg || val('f-cert-title')) {
+      out.push('  certificate: {');
+      if (val('f-cert-title')) out.push('    title: ' + q(val('f-cert-title')) + ',');
+      if (certImg) out.push('    image: ' + q(certImg) + ',');
+      out.push('  },');
+    }
     out.push('},');
     return out.join('\n');
   }
@@ -437,7 +480,7 @@ Course certificate | https://example.com/cert"></textarea>
     $('pv-desc').textContent = val('f-desc') || 'Your description appears here — Claude’s version will be sharper and richer.';
     var wrap = $('pv-skills');
     wrap.innerHTML = '';
-    parseSkills().forEach(function (s) {
+    currentSkills().forEach(function (s) {
       var el = document.createElement('span');
       el.className = 'pv-skill'; el.textContent = s;
       wrap.appendChild(el);
@@ -466,7 +509,7 @@ Course certificate | https://example.com/cert"></textarea>
       var num = document.createElement('span');
       num.className = 'li-num'; num.textContent = String(i + 1).padStart(2, '0');
       var t = document.createElement('span');
-      t.className = 'li-title'; t.textContent = (m.attachment ? '📎 ' : '') + m.title;
+      t.className = 'li-title'; t.textContent = (m.attachment ? '📎 ' : '') + (m.certificate ? '🎓 ' : '') + m.title;
       var d = document.createElement('span');
       d.className = 'li-date'; d.textContent = m.date;
       b.appendChild(num); b.appendChild(t); b.appendChild(d);
@@ -496,12 +539,27 @@ Course certificate | https://example.com/cert"></textarea>
     render();
   }
 
+  function setCertImage(next) {
+    certImage = next;
+    $('cert-preview-wrap').hidden = !certImage;
+    if (certImage) {
+      $('cert-preview').src = certImage.dataUrl;
+      $('cert-size').textContent = certImage.kb + ' KB after compression';
+      if (!$('f-cert-name').value) $('f-cert-name').value = slug((val('f-cert-title') || val('f-title')) + ' certificate') + '.jpg';
+      $('cert-state').textContent = 'certificate ready';
+    } else {
+      $('cert-state').textContent = certExistingPath ? 'current: ' + certExistingPath + ' (upload to replace)' : 'no certificate chosen';
+      $('f-cert-name').value = '';
+    }
+    render();
+  }
+
   function fillForm(m) {
     $('f-title').value = m.title || '';
     $('f-date').value = m.date || '';
     $('f-category').value = m.category || '';
     $('f-desc').value = m.description || '';
-    $('f-skills').value = (m.skills || []).join(', ');
+    $('f-cert-title').value = (m.certificate && m.certificate.title) || '';
     $('f-resources').value = (m.resources || []).map(function (r) {
       return typeof r === 'string' ? r : (r.label + (r.url ? ' | ' + r.url : ''));
     }).join('\n');
@@ -512,8 +570,10 @@ Course certificate | https://example.com/cert"></textarea>
   function startEdit(i) {
     mode = { type: 'edit', index: i };
     existingImagePath = (EXISTING[i].attachment && EXISTING[i].attachment.image) || '';
+    certExistingPath = (EXISTING[i].certificate && EXISTING[i].certificate.image) || '';
     fillForm(EXISTING[i]);
     setImage(null);
+    setCertImage(null);
     $('banner').hidden = false;
     $('banner-label').textContent = '#' + String(i + 1).padStart(2, '0') + ' — ' + EXISTING[i].title;
     $('view-list').hidden = true;
@@ -532,6 +592,7 @@ Course certificate | https://example.com/cert"></textarea>
     $('copy-remove').hidden = true;
     $('clear').hidden = false;
     existingImagePath = '';
+    certExistingPath = '';
     if (which === 'new') {
       mode = { type: 'new', index: -1 };
       $('view-list').hidden = true;
@@ -540,6 +601,7 @@ Course certificate | https://example.com/cert"></textarea>
       $('copy-main').textContent = 'Copy request for Claude';
       restoreDraft();
       setImage(null);
+      setCertImage(null);
     } else {
       mode = { type: 'edit', index: -1 };
       $('view-form').hidden = true;
@@ -613,6 +675,7 @@ Course certificate | https://example.com/cert"></textarea>
     fields.forEach(function (f) { $(f).value = ''; });
     try { localStorage.removeItem(KEY); } catch (e) {}
     setImage(null);
+    setCertImage(null);
   });
   $('f-att-img').addEventListener('change', function () {
     var file = this.files && this.files[0];
@@ -626,6 +689,18 @@ Course certificate | https://example.com/cert"></textarea>
   });
   $('img-remove').addEventListener('click', function () { setImage(null); });
   $('f-img-name').addEventListener('input', render);
+  $('f-cert-img').addEventListener('change', function () {
+    var file = this.files && this.files[0];
+    this.value = '';
+    if (!file) return;
+    $('cert-state').textContent = 'compressing…';
+    processImageFile(file).then(setCertImage, function (err) {
+      setCertImage(null);
+      $('cert-state').textContent = '⚠ ' + err.message;
+    });
+  });
+  $('cert-remove').addEventListener('click', function () { setCertImage(null); });
+  $('f-cert-name').addEventListener('input', render);
   fields.forEach(function (f) { $(f).addEventListener('input', render); });
 
   window.__composerTest = { processImageFile: processImageFile, buildRequest: buildRequest, startEdit: startEdit };
