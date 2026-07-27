@@ -61,13 +61,17 @@ window.MILESTONES = [
     title: 'AI and Developer Productivity course',
     date: 'Mar 15, 2026',
     category: 'Learning',
-    description: 'Completed the AI and Developer Productivity course, covering practical applications of artificial intelligence in software development and developer productivity.',
+    description: 'Completed the AI and Developer Productivity course, covering the practical application of artificial intelligence across everyday software development work — assisted code generation, refactoring, review, documentation and testing — and how those capabilities translate into developer productivity rather than novelty.',
     skills: [
       'AI software development',
       'Developer productivity',
       'Artificial intelligence',
     ],
     resources: ['AI and Developer Productivity certificate'],
+    certificate: {
+      title: 'AI and Developer Productivity',
+      image: 'attachments/ai-and-developer-productivity-course-certificate.jpg',
+    },
   },
   {
     title: 'Discovery of agent skills',
