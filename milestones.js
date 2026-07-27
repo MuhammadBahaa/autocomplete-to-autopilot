@@ -86,8 +86,8 @@ window.MILESTONES = [
     title: 'Going steady with Cursor',
     date: '4 Apr 2026',
     category: 'Subscriptions',
-    description: 'Upgraded from trial curiosity to a paid Cursor subscription — the first official line item in the AI tooling budget.',
-    skills: [],
+    description: 'Upgraded from trial curiosity to a paid Cursor Pro subscription — the first official line item in the AI tooling budget. Anysphere’s AI-native VS Code fork, with Tab autocomplete, Cmd+K inline edits and a codebase-aware Agent mode, was now a keeper, not an experiment.',
+    skills: ['Cursor', 'AI-native editors', 'Tool evaluation'],
     resources: [],
     attachment: {
       file: 'welcome-to-cursor.eml',
