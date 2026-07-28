@@ -91,7 +91,6 @@
   .status-done { background: #123527; color: #5FE3A1; border: 1px solid #1E5B41; }
   .status-progress { background: #3A2C10; color: #FFC95C; border: 1px solid #6B5320; }
   .status-planned { background: #231C39; color: #8F85A6; border: 1px dashed #4A3D6B; }
-  .category { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; background: #2A2145; color: #B9A3FF; }
   .cv-badge {
     font-size: 12px; font-weight: 700; letter-spacing: .04em; padding: 4px 12px; border-radius: 999px;
     background: #FFD84D; color: #120E1C; border: 2px solid #120E1C; transform: rotate(-2deg);
@@ -100,8 +99,7 @@
 
   h2 { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 24px; margin: 0 0 8px; letter-spacing: -0.01em; color: #F1ECFA; }
   .desc { font-size: 15.5px; line-height: 1.65; color: #A79DBE; margin: 0 0 16px; text-wrap: pretty; }
-  .skills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
-  .skill {
+  .code {
     font-family: 'Spline Sans Mono', monospace; font-size: 12.5px; padding: 4px 10px;
     border-radius: 8px; background: #231C39; color: #C9C0DC; border: 1px solid #35294F;
   }
@@ -208,7 +206,7 @@
   if (!data) {
     itemsEl.innerHTML =
       '<article><div class="card"><h2>Couldn’t load milestones</h2>' +
-      '<p class="desc">Check <span class="skill">milestones.js</span> for a syntax error — ' +
+      '<p class="desc">Check <span class="code">milestones.js</span> for a syntax error — ' +
       'usually a missing comma, quote, or bracket in the last entry added.</p></div></article>';
     return;
   }
@@ -267,7 +265,6 @@
     }
 
     var ring = ((!hasStatus || m.status === 'done') && m.cvWorthy) ? 'var(--accent)' : s.ring;
-    var skills = Array.isArray(m.skills) ? m.skills : [];
     var resources = Array.isArray(m.resources) ? m.resources : [];
 
     html +=
@@ -279,15 +276,10 @@
           '<div class="meta">' +
             '<span class="date">' + esc(m.date) + '</span>' +
             (hasStatus ? '<span class="status ' + s.cls + '">' + s.label + '</span>' : '') +
-            '<span class="category">' + esc(m.category) + '</span>' +
             (m.cvWorthy ? '<span class="cv-badge">★ CV-worthy</span>' : '') +
           '</div>' +
           '<h2>' + esc(m.title) + '</h2>' +
           '<p class="desc">' + esc(m.description) + '</p>' +
-          (skills.length ?
-            '<div class="skills">' + skills.map(function (sk) {
-              return '<span class="skill">' + esc(sk) + '</span>';
-            }).join('') + '</div>' : '') +
           (resources.length ?
             '<div class="resources">' + resources.map(function (r) {
               // strings (or objects without url) are plain references; objects with url are links

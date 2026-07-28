@@ -14,9 +14,7 @@ All data lives in one file: [milestones.js](milestones.js). Open it, copy the te
 {
   title: 'What you achieved',
   date: '23 Jul 2026',            // day is optional: 'Jul 2026' works too
-  category: 'LLMs',               // any short label
   description: 'One or two sentences about what you did and learned.',
-  skills: ['Skill A', 'Skill B'],
   resources: ['artifact name', { label: 'GitHub repo', url: 'https://github.com/...' }],
 },
 ```
@@ -25,7 +23,7 @@ Optional per entry: `status: 'done' | 'progress' | 'planned'` adds a status pill
 
 Three ways to do it, pick whichever is closest to hand:
 
-1. **Ask Claude Code** — "add a milestone: finished X on date Y, skills A/B, it's CV-worthy". It edits, commits and pushes; the site updates itself.
+1. **Ask Claude Code** — "add a milestone: finished X on date Y, it's CV-worthy". It edits, commits and pushes; the site updates itself.
 2. **GitHub web editor** — open `milestones.js` on github.com, press the ✏️ pencil, paste a filled-in template, commit. Works from any device, deploys in ~1 minute.
 3. **Local editor** — edit the file, then `git commit` and `git push`.
 

@@ -156,17 +156,8 @@
   }
   .pv-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin-bottom: 10px; }
   .pv-date { font-family: var(--mono); font-size: 12.5px; color: #8F85A6; }
-  .pv-cat {
-    font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
-    padding: 3px 9px; border-radius: 999px; background: #2A2145; color: #B9A3FF;
-  }
   .pv-title { font-size: 20px; font-weight: 700; margin: 0 0 6px; color: #F1ECFA; letter-spacing: -0.01em; }
   .pv-desc { font-size: 14px; line-height: 1.6; color: #A79DBE; margin: 0 0 12px; }
-  .pv-skills { display: flex; flex-wrap: wrap; gap: 7px; }
-  .pv-skill {
-    font-family: var(--mono); font-size: 11.5px; padding: 3px 9px; border-radius: 7px;
-    background: #231C39; color: #C9C0DC; border: 1px solid #35294F;
-  }
   .pv-note { font-size: 12px; color: #8F85A6; margin-top: 10px; font-style: italic; }
 
   .out {
@@ -209,7 +200,7 @@
 
       <div id="view-list" hidden>
         <h2>Pick a milestone to edit</h2>
-        <input class="search" id="f-search" placeholder="Search title, category, or date…">
+        <input class="search" id="f-search" placeholder="Search title or date…">
         <div class="list" id="list"></div>
       </div>
 
@@ -221,23 +212,9 @@
           <input id="f-title" placeholder="e.g. Built my first MCP server">
         </div>
 
-        <div class="row2">
-          <div class="field">
-            <label for="f-date">Date</label>
-            <input id="f-date" placeholder="4 Jun 2026 · Jun 2026 - Present">
-          </div>
-          <div class="field">
-            <label for="f-category">Category</label>
-            <input id="f-category" list="cats" placeholder="pick or type your own">
-            <datalist id="cats">
-              <option>Foundations</option><option>Context Engineering</option><option>Learning</option>
-              <option>Skills &amp; Plugins</option><option>Subscriptions</option><option>Agentic Coding</option>
-              <option>Engineering Harness</option><option>Design Automation</option><option>Localization Automation</option>
-              <option>Agent Architecture</option><option>Agent Orchestration</option><option>Continuous Learning</option>
-              <option>Automation &amp; MCP</option><option>Personal AI Systems</option><option>Product Building</option>
-              <option>Journey</option>
-            </datalist>
-          </div>
+        <div class="field">
+          <label for="f-date">Date</label>
+          <input id="f-date" placeholder="4 Jun 2026 · Jun 2026 - Present">
         </div>
 
         <div class="field">
@@ -324,11 +301,9 @@ Course certificate | https://example.com/cert"></textarea>
       <div class="preview-card">
         <div class="pv-meta">
           <span class="pv-date" id="pv-date">date</span>
-          <span class="pv-cat" id="pv-cat">category</span>
         </div>
         <p class="pv-title" id="pv-title">Your milestone title</p>
         <p class="pv-desc" id="pv-desc">Your description appears here — Claude's version will be sharper and richer.</p>
-        <div class="pv-skills" id="pv-skills"></div>
         <p class="pv-note" id="pv-note" hidden></p>
       </div>
 
@@ -351,7 +326,7 @@ Course certificate | https://example.com/cert"></textarea>
 (function () {
   var $ = function (id) { return document.getElementById(id); };
   var EXISTING = Array.isArray(window.EXISTING) ? window.EXISTING : [];
-  var fields = ['f-title', 'f-date', 'f-category', 'f-desc', 'f-resources', 'f-att-file', 'f-att-note', 'f-cert-title'];
+  var fields = ['f-title', 'f-date', 'f-desc', 'f-resources', 'f-att-file', 'f-att-note', 'f-cert-title'];
   var KEY = 'milestone-composer-draft-v3';
   var mode = { type: 'new', index: -1 };
   var image = null; // { dataUrl, kb }
@@ -365,9 +340,6 @@ Course certificate | https://example.com/cert"></textarea>
     return String(s || '').toLowerCase().replace(/\.[a-z0-9]+$/, '')
       .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'attachment';
   }
-  function currentSkills() {
-    return (mode.type === 'edit' && EXISTING[mode.index]) ? (EXISTING[mode.index].skills || []) : [];
-  }
   function parseResources() {
     return val('f-resources') ? val('f-resources').split('\n').map(function (s) { return s.trim(); }).filter(Boolean) : [];
   }
@@ -379,9 +351,7 @@ Course certificate | https://example.com/cert"></textarea>
     var lines = [];
     lines.push('title: ' + (val('f-title') || '(missing — ask me)'));
     lines.push('date: ' + (val('f-date') || '(missing — ask me)'));
-    lines.push('category: ' + (val('f-category') || '(pick the best fit)'));
     lines.push('description (rough): ' + (val('f-desc') || '(missing — ask me)'));
-    lines.push('skills: ' + (mode.type === 'edit' ? '(keep the existing skills)' : '(suggest from the description)'));
     var res = parseResources();
     lines.push('resources: ' + (res.length ? res.join(' ; ') : '(none)'));
     if (val('f-att-file') || val('f-att-note')) {
@@ -456,7 +426,6 @@ Course certificate | https://example.com/cert"></textarea>
     return 'Remove the milestone "' + orig.title + '" (date ' + orig.date + ') from milestones.js on my AI Milestones site (repo MuhammadBahaa/autocomplete-to-autopilot).\n\n' + FOOTER;
   }
   function buildRaw() {
-    var skills = currentSkills();
     var res = parseResources().map(function (r) {
       var parts = r.split('|').map(function (p) { return p.trim(); });
       return parts.length > 1 ? '{ label: ' + q(parts[0]) + ', url: ' + q(parts[1]) + ' }' : q(parts[0]);
@@ -465,9 +434,7 @@ Course certificate | https://example.com/cert"></textarea>
     out.push('{');
     out.push('  title: ' + q(val('f-title') || 'Untitled') + ',');
     out.push('  date: ' + q(val('f-date') || 'Jul 2026') + ',');
-    out.push('  category: ' + q(val('f-category') || 'Learning') + ',');
     out.push('  description: ' + q(val('f-desc') || '') + ',');
-    out.push('  skills: [' + skills.map(q).join(', ') + '],');
     out.push('  resources: [' + res.join(', ') + '],');
     if (val('f-att-file')) {
       out.push('  attachment: {');
@@ -491,16 +458,8 @@ Course certificate | https://example.com/cert"></textarea>
   // ---------- rendering ----------
   function render() {
     $('pv-date').textContent = val('f-date') || 'date';
-    $('pv-cat').textContent = val('f-category') || 'category';
     $('pv-title').textContent = val('f-title') || 'Your milestone title';
     $('pv-desc').textContent = val('f-desc') || 'Your description appears here — Claude’s version will be sharper and richer.';
-    var wrap = $('pv-skills');
-    wrap.innerHTML = '';
-    currentSkills().forEach(function (s) {
-      var el = document.createElement('span');
-      el.className = 'pv-skill'; el.textContent = s;
-      wrap.appendChild(el);
-    });
     var noteEl = $('pv-note');
     if (val('f-att-file')) {
       noteEl.hidden = false;
@@ -518,7 +477,7 @@ Course certificate | https://example.com/cert"></textarea>
     var list = $('list');
     list.innerHTML = '';
     EXISTING.forEach(function (m, i) {
-      var hay = (m.title + ' ' + m.category + ' ' + m.date).toLowerCase();
+      var hay = (m.title + ' ' + m.date).toLowerCase();
       if (query && hay.indexOf(query) === -1) return;
       var b = document.createElement('button');
       b.type = 'button'; b.className = 'list-item';
@@ -575,7 +534,6 @@ Course certificate | https://example.com/cert"></textarea>
   function fillForm(m) {
     $('f-title').value = m.title || '';
     $('f-date').value = m.date || '';
-    $('f-category').value = m.category || '';
     $('f-desc').value = m.description || '';
     $('f-cert-title').value = (m.certificate && m.certificate.title) || '';
     $('f-resources').value = (m.resources || []).map(function (r) {

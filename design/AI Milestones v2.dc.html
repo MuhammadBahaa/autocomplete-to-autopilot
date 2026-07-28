@@ -51,20 +51,12 @@
             <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 12px;">
               <span style="font-family: 'Spline Sans Mono', monospace; font-size: 13px; font-weight: 500; color: #8F85A6;">{{ m.date }}</span>
               <span style="font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; background: {{ m.statusBg }}; color: {{ m.statusFg }}; border: {{ m.statusBorder }};">{{ m.statusLabel }}</span>
-              <span style="font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; background: #2A2145; color: #B9A3FF;">{{ m.category }}</span>
               <sc-if value="{{ m.cvWorthy }}" hint-placeholder-val="{{ false }}">
                 <span style="font-size: 12px; font-weight: 700; letter-spacing: .04em; padding: 4px 12px; border-radius: 999px; background: #FFD84D; color: #120E1C; border: 2px solid #120E1C; transform: rotate(-2deg); box-shadow: 2px 2px 0 rgba(255, 216, 77, .35);">★ CV-worthy</span>
               </sc-if>
             </div>
             <h2 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 24px; margin: 0 0 8px; letter-spacing: -0.01em; color: #F1ECFA;">{{ m.title }}</h2>
             <p style="font-size: 15.5px; line-height: 1.65; color: #A79DBE; margin: 0 0 16px; text-wrap: pretty;">{{ m.description }}</p>
-            <sc-if value="{{ m.hasSkills }}" hint-placeholder-val="{{ true }}">
-              <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px;">
-                <sc-for list="{{ m.skills }}" as="skill" hint-placeholder-count="3">
-                  <span style="font-family: 'Spline Sans Mono', monospace; font-size: 12.5px; padding: 4px 10px; border-radius: 8px; background: #231C39; color: #C9C0DC; border: 1px solid #35294F;">{{ skill }}</span>
-                </sc-for>
-              </div>
-            </sc-if>
             <sc-if value="{{ m.hasResources }}" hint-placeholder-val="{{ false }}">
               <div style="display: flex; flex-direction: column; gap: 6px; border-top: 1px dashed #35294F; padding-top: 12px;">
                 <sc-for list="{{ m.resources }}" as="r" hint-placeholder-count="1">
@@ -88,17 +80,14 @@ class Component extends DCLogic {
   // ======================================================================
   // EDIT YOUR MILESTONES HERE (newest last). Fields:
   //   title, date ('12 Jan 2026' — day optional), status: 'done' | 'progress' | 'planned',
-  //   category, description, skills: [..],
-  //   resources: [{label, url}], cvWorthy: true/false
+  //   description, resources: [{label, url}], cvWorthy: true/false
   // ======================================================================
   static MILESTONES = [
     {
       title: 'Python foundations for AI',
       date: '12 Jan 2026',
       status: 'done',
-      category: 'Foundations',
       description: 'Got comfortable with Python, NumPy and Pandas — the toolkit behind everything that follows.',
-      skills: ['Python', 'NumPy', 'Pandas'],
       resources: [{ label: 'Course notes', url: '#' }],
       cvWorthy: false,
     },
@@ -106,9 +95,7 @@ class Component extends DCLogic {
       title: 'Machine learning basics',
       date: '25 Feb 2026',
       status: 'done',
-      category: 'ML',
       description: 'Finished an intro ML course: regression, classification, train/test splits, and evaluating models properly.',
-      skills: ['scikit-learn', 'Regression', 'Classification'],
       resources: [],
       cvWorthy: true,
     },
@@ -116,9 +103,7 @@ class Component extends DCLogic {
       title: 'First neural network from scratch',
       date: '8 Apr 2026',
       status: 'done',
-      category: 'Deep Learning',
       description: 'Built and trained a small neural net by hand — backprop finally clicked.',
-      skills: ['PyTorch', 'Backpropagation'],
       resources: [{ label: 'GitHub repo', url: '#' }],
       cvWorthy: true,
     },
@@ -126,9 +111,7 @@ class Component extends DCLogic {
       title: 'Prompt engineering deep dive',
       date: '15 Jun 2026',
       status: 'progress',
-      category: 'LLMs',
       description: 'Learning to design, test and iterate prompts — few-shot, chain-of-thought, and structured outputs.',
-      skills: ['Prompting', 'Evaluation'],
       resources: [],
       cvWorthy: false,
     },
@@ -136,9 +119,7 @@ class Component extends DCLogic {
       title: 'Build a RAG chatbot',
       date: '1 Aug 2026',
       status: 'planned',
-      category: 'LLMs',
       description: 'A retrieval-augmented chatbot over my own notes — embeddings, vector search, and a clean chat UI.',
-      skills: ['RAG', 'Embeddings', 'Vector DB'],
       resources: [],
       cvWorthy: true,
     },
@@ -146,9 +127,7 @@ class Component extends DCLogic {
       title: 'Fine-tune a small model',
       date: '10 Oct 2026',
       status: 'planned',
-      category: 'Deep Learning',
       description: 'Fine-tune an open-source model on a custom dataset and publish the results.',
-      skills: ['Fine-tuning', 'Hugging Face'],
       resources: [],
       cvWorthy: true,
     },
@@ -195,7 +174,6 @@ class Component extends DCLogic {
         statusLabel: s.label, statusBg: s.bg, statusFg: s.fg, statusBorder: s.border,
         dotBg: s.dotBg, dotFg: s.dotFg, dotRing: s.ring === '#1FA968' && m.cvWorthy ? accent : s.ring,
         cardOpacity: s.opacity,
-        hasSkills: (m.skills || []).length > 0,
         hasResources: (m.resources || []).length > 0,
       };
     });
