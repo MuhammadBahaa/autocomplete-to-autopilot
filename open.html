@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Open in Claude Code</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+<!--
+  Launch pad for the Milestone Composer's "Open in Claude Code" button.
+
+  The composer runs inside an artifact iframe, which blocks navigation to a
+  claude:// URL outright. So the button links here instead — a plain top-level
+  page on this site — and this page does the protocol hand-off, which browsers
+  allow (with their own "Open Claude?" prompt).
+
+  The deep link arrives in the URL fragment (#u=…), so it never reaches a
+  server. Only claude://code/new links are accepted: this page is public, and
+  must not become an open redirect into arbitrary local URL schemes.
+-->
+<style>
+  :root { --accent: #8B6CFF; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; background: #120E1C; color: #F1ECFA;
+    font-family: 'Spline Sans', 'Avenir Next', system-ui, sans-serif; line-height: 1.55;
+    display: flex; align-items: center; justify-content: center; padding: 24px;
+    background-image: radial-gradient(#241D36 1.2px, transparent 1.2px);
+    background-size: 26px 26px;
+  }
+  .card {
+    width: 100%; max-width: 560px; background: #1C1630; border: 1px solid #35294F;
+    border-radius: 18px; padding: 28px;
+  }
+  h1 { font-size: 22px; font-weight: 700; margin: 0 0 8px; letter-spacing: -0.01em; }
+  p { margin: 0 0 14px; color: #A79DBE; font-size: 14.5px; }
+  .mono { font-family: 'Spline Sans Mono', ui-monospace, Menlo, monospace; font-size: 12.5px; }
+  .folder { color: #C9B6FF; word-break: break-all; }
+  .prompt {
+    background: #231C39; border: 1px solid #35294F; border-radius: 12px;
+    padding: 12px 14px; color: #A79DBE; white-space: pre-wrap; overflow-wrap: break-word;
+    max-height: 190px; overflow: auto; margin: 0 0 18px;
+  }
+  a.btn {
+    display: inline-block; text-decoration: none; font-weight: 600; font-size: 15px;
+    background: var(--accent); border: 1px solid var(--accent); color: #fff;
+    border-radius: 999px; padding: 11px 22px;
+  }
+  a.btn:hover { filter: brightness(1.08); }
+  .foot { margin: 16px 0 0; font-size: 12.5px; color: #8F85A6; }
+  .bad { color: #E2557B; }
+</style>
+</head>
+<body>
+<main class="card">
+  <h1 id="head">Opening Claude Code…</h1>
+  <p id="lede">Your browser should offer to open Claude. If it doesn't, use the button below.</p>
+  <p class="mono folder" id="folder" hidden></p>
+  <div class="prompt mono" id="prompt" hidden></div>
+  <p id="actions" hidden><a class="btn" id="go" href="#">⚡ Open Claude Code</a></p>
+  <p class="foot" id="foot" hidden>The full request is already on your clipboard — if the app doesn't come up, paste it into Claude Code yourself.</p>
+</main>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+
+  function fail(msg) {
+    $('head').textContent = 'Nothing to open';
+    $('lede').innerHTML = '';
+    $('lede').textContent = msg;
+    $('lede').className = 'bad';
+  }
+
+  var hash = location.hash.replace(/^#/, '');
+  var raw = '';
+  hash.split('&').forEach(function (part) {
+    var eq = part.indexOf('=');
+    if (eq > 0 && part.slice(0, eq) === 'u') raw = part.slice(eq + 1);
+  });
+  if (!raw) {
+    fail('This page opens a Claude Code session from the Milestone Composer. Open it from the composer’s button.');
+    return;
+  }
+
+  var url;
+  try { url = decodeURIComponent(raw); } catch (e) { url = ''; }
+  // Public page: accept the one shape we mean to launch, nothing else.
+  if (url.indexOf('claude://code/new?') !== 0) {
+    fail('That link isn’t a Claude Code request, so it was not opened.');
+    return;
+  }
+
+  var params;
+  try { params = new URL(url).searchParams; } catch (e) { params = null; }
+  if (params) {
+    var folder = params.get('folder');
+    var q = params.get('q');
+    if (folder) { $('folder').textContent = '📁 ' + folder; $('folder').hidden = false; }
+    if (q) { $('prompt').textContent = q; $('prompt').hidden = false; }
+  }
+
+  $('go').href = url;
+  $('actions').hidden = false;
+  $('foot').hidden = false;
+
+  // Try straight away; the button stays for browsers that want a real click.
+  setTimeout(function () { try { location.href = url; } catch (e) {} }, 60);
+})();
+</script>
+</body>
+</html>

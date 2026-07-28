@@ -39,6 +39,8 @@
   }
 
   * { box-sizing: border-box; }
+  /* our display rules (flex/inline-block) outrank the UA [hidden] rule — restore it */
+  [hidden] { display: none !important; }
   body {
     margin: 0; background: var(--bg); color: var(--ink);
     font-family: var(--sans); line-height: 1.5;
@@ -118,16 +120,17 @@
   .stat-input label { margin: 4px 0 0; text-align: center; }
 
   .btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
-  button {
+  button, a.btn {
     font-family: var(--sans); font-size: 14px; font-weight: 600; cursor: pointer;
     border-radius: 999px; padding: 10px 18px; border: 1px solid var(--border-strong);
     background: var(--panel-2); color: var(--ink); transition: border-color .15s ease, background .15s ease;
   }
-  button:hover { border-color: var(--accent); }
-  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-  button.primary:hover { filter: brightness(1.08); }
-  button.danger:hover { border-color: var(--danger); color: var(--danger); }
-  @media (prefers-reduced-motion: reduce) { button, input, textarea, .tab { transition: none; } }
+  a.btn { display: inline-block; text-decoration: none; line-height: 1.5; }
+  button:hover, a.btn:hover { border-color: var(--accent); }
+  button.primary, a.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  button.primary:hover, a.btn.primary:hover { filter: brightness(1.08); }
+  button.danger:hover, a.btn.danger:hover { border-color: var(--danger); color: var(--danger); }
+  @media (prefers-reduced-motion: reduce) { button, a.btn, input, textarea, .tab { transition: none; } }
 
   .copied { font-size: 13px; color: var(--ok); font-family: var(--mono); align-self: center; }
 
@@ -183,8 +186,8 @@
 
   <div class="steps">
     <span class="step"><span class="n">1</span><span><b>Fill</b> or <b>pick</b> a milestone</span></span>
-    <span class="step"><span class="n">2</span><span><b>Copy</b> the request</span></span>
-    <span class="step"><span class="n">3</span><span><b>Paste</b> to Claude Code</span></span>
+    <span class="step"><span class="n">2</span><span><b>Open</b> it in Claude Code</span></span>
+    <span class="step"><span class="n">3</span><span><b>Review</b> the prefilled prompt, hit enter</span></span>
     <span class="step"><span class="n">4</span><span><b>Live</b> in ~1 minute 🚀</span></span>
   </div>
 
@@ -298,11 +301,13 @@
         </div>
 
         <div class="btns">
-          <button class="primary" id="copy-main" type="button">Copy request for Claude</button>
-          <button id="copy-remove" class="danger" type="button" hidden>Copy removal request</button>
+          <a class="btn primary" id="open-main" href="#" role="button" target="_blank" rel="noopener">⚡ Open in Claude Code</a>
+          <a class="btn danger" id="open-remove" href="#" role="button" target="_blank" rel="noopener" hidden>Open removal in Claude Code</a>
+          <button id="copy-main" type="button">Copy instead</button>
           <button id="clear" type="button">Clear</button>
-          <span class="copied" id="copied" hidden>Copied ✓ — now paste it to Claude Code</span>
+          <span class="copied" id="copied" hidden></span>
         </div>
+        <p class="hint" id="open-hint">Starts a new Claude Code session in this project with the request prefilled — read it, then hit enter. It goes through a launch page on the live site (an artifact can't open an app directly), so expect a new tab and your browser asking to open Claude. The request lands on your clipboard at the same time, so you can always paste it in yourself instead.</p>
       </div>
     </section>
 
@@ -339,6 +344,7 @@
   var fields = ['f-title', 'f-date', 'f-desc', 'f-att-file', 'f-att-note', 'f-cert-title',
     'f-st-skills', 'f-st-plugins', 'f-st-agents', 'f-st-commands', 'f-st-scripts', 'f-st-courses'];
   var KEY = 'milestone-composer-draft-v3';
+  var PROJECT_DIR = '__PROJECT_DIR__'; // absolute path to the repo, baked in at build time
   var mode = { type: 'new', index: -1 };
   var image = null; // { dataUrl, kb }
   var existingImagePath = ''; // for edit mode
@@ -412,10 +418,20 @@
       certImage.dataUrl,
       '--- end certificate image ---'];
   }
+  // A deep link can only carry a short prompt (the desktop app truncates ~14k chars),
+  // so base64 blocks stay on the clipboard and the prompt points Claude at it.
+  function binaryNote() {
+    var files = [];
+    if (image) files.push('attachment ' + (image.isPdf ? 'PDF' : 'image') + ' → ' + imgRepoPath());
+    if (certImage) files.push('certificate ' + (certImage.isPdf ? 'PDF' : 'image') + ' → ' + certRepoPath());
+    if (!files.length) return [];
+    return ['', 'Files to save: ' + files.join('; ') + '.',
+      'Their base64 data URLs are too long for this link — the full request, with the base64 block(s), is on my clipboard. Read it with `pbpaste` and take the block(s) from there.'];
+  }
   var FOOTER = 'Finally: verify locally, push, confirm the live URL, and rebuild + republish the Milestone Composer snapshot (tools/build-composer.mjs).';
   var POLISH = 'My rough input — please: correct my English, rephrase it in the site’s voice, and expand the description using your own knowledge of the tools/concepts I mention (stay accurate; do not invent personal claims, metrics, or results I didn’t state):';
 
-  function buildRequest() {
+  function buildRequest(compact) {
     var orig = mode.type === 'edit' ? EXISTING[mode.index] : null;
     var lines = [];
     if (orig) {
@@ -436,10 +452,28 @@
     if (mode.type === 'edit' && certExistingPath && !certImage) {
       lines.push('certificate image: keep the current one (' + certExistingPath + ')');
     }
-    lines = lines.concat(imageBlock()).concat(certBlock());
+    lines = compact ? lines.concat(binaryNote()) : lines.concat(imageBlock()).concat(certBlock());
     lines.push('');
     lines.push(FOOTER);
     return lines.join('\n');
+  }
+
+  // claude://code/new?folder=…&q=… opens a new Claude Code session in the desktop
+  // app, rooted at this repo, with the request prefilled (you still hit enter).
+  function deepLink(text) {
+    return 'claude://code/new?folder=' + encodeURIComponent(PROJECT_DIR) +
+      '&q=' + encodeURIComponent(text);
+  }
+  // Inside an artifact iframe a claude:// href is blocked outright (the frame
+  // shows "This content is blocked"), and the frame only hands http(s) links to
+  // the shell. So when framed, link to open.html on the live site — a top-level
+  // page — and let it do the protocol hand-off. The deep link rides in the URL
+  // fragment, so it never reaches GitHub's servers.
+  var FRAMED = (function () { try { return window.top !== window; } catch (e) { return true; } })();
+  var BRIDGE = 'https://muhammadbahaa.github.io/autocomplete-to-autopilot/open.html';
+  function launchLink(text) {
+    var deep = deepLink(text);
+    return FRAMED ? BRIDGE + '#u=' + encodeURIComponent(deep) : deep;
   }
   function buildRemoveRequest() {
     var orig = EXISTING[mode.index];
@@ -486,6 +520,8 @@
     } else { noteEl.hidden = true; }
     $('out-request').textContent = buildRequest();
     $('out-raw').textContent = buildRaw();
+    $('open-main').href = launchLink(buildRequest(true));
+    if (mode.type === 'edit' && mode.index >= 0) $('open-remove').href = launchLink(buildRemoveRequest());
     if (mode.type === 'new') {
       try { localStorage.setItem(KEY, JSON.stringify(fields.map(function (f) { return $(f).value; }))); } catch (e) {}
     }
@@ -573,9 +609,9 @@
     $('banner-label').textContent = '#' + String(i + 1).padStart(2, '0') + ' — ' + EXISTING[i].title;
     $('view-list').hidden = true;
     $('view-form').hidden = false;
-    $('form-heading').textContent = 'Edit, then copy the update request';
-    $('copy-main').textContent = 'Copy update request';
-    $('copy-remove').hidden = false;
+    $('form-heading').textContent = 'Edit, then open the update in Claude Code';
+    $('open-main').textContent = '⚡ Open update in Claude Code';
+    $('open-remove').hidden = false;
     $('clear').hidden = true;
     render();
   }
@@ -584,7 +620,7 @@
     $('tab-new').classList.toggle('active', which === 'new');
     $('tab-edit').classList.toggle('active', which === 'edit');
     $('banner').hidden = true;
-    $('copy-remove').hidden = true;
+    $('open-remove').hidden = true;
     $('clear').hidden = false;
     existingImagePath = '';
     certExistingPath = '';
@@ -593,7 +629,7 @@
       $('view-list').hidden = true;
       $('view-form').hidden = false;
       $('form-heading').textContent = 'Your rough notes';
-      $('copy-main').textContent = 'Copy request for Claude';
+      $('open-main').textContent = '⚡ Open in Claude Code';
       restoreDraft();
       setImage(null);
       setCertImage(null);
@@ -666,11 +702,14 @@
     try { document.execCommand('copy'); } catch (e) {}
     document.body.removeChild(ta); done();
   }
-  function flashCopied() {
-    var c = $('copied');
-    c.hidden = false;
-    clearTimeout(flashCopied.t);
-    flashCopied.t = setTimeout(function () { c.hidden = true; }, 3500);
+  function flash(msg) {
+    return function () {
+      var c = $('copied');
+      c.textContent = msg;
+      c.hidden = false;
+      clearTimeout(flash.t);
+      flash.t = setTimeout(function () { c.hidden = true; }, 4000);
+    };
   }
 
   // ---------- wiring ----------
@@ -678,9 +717,18 @@
   $('tab-edit').addEventListener('click', function () { showTab('edit'); });
   $('cancel-edit').addEventListener('click', function () { showTab('edit'); });
   $('f-search').addEventListener('input', renderList);
-  $('copy-main').addEventListener('click', function () { copy(buildRequest(), flashCopied); });
-  $('copy-remove').addEventListener('click', function () { copy(buildRemoveRequest(), flashCopied); });
-  $('copy-raw').addEventListener('click', function () { copy(buildRaw(), flashCopied); });
+  // The anchors navigate to claude://… on their own; we only ride along to put the
+  // full request (base64 blocks and all) on the clipboard as the fallback.
+  $('open-main').addEventListener('click', function () {
+    copy(buildRequest(), flash('Opening Claude Code ✓ — full request also copied'));
+  });
+  $('open-remove').addEventListener('click', function () {
+    copy(buildRemoveRequest(), flash('Opening Claude Code ✓ — removal request also copied'));
+  });
+  $('copy-main').addEventListener('click', function () {
+    copy(buildRequest(), flash('Copied ✓ — now paste it to Claude Code'));
+  });
+  $('copy-raw').addEventListener('click', function () { copy(buildRaw(), flash('Copied ✓')); });
   $('clear').addEventListener('click', function () {
     fields.forEach(function (f) { $(f).value = ''; });
     try { localStorage.removeItem(KEY); } catch (e) {}
@@ -713,7 +761,10 @@
   $('f-cert-name').addEventListener('input', render);
   fields.forEach(function (f) { $(f).addEventListener('input', render); });
 
-  window.__composerTest = { processImageFile: processImageFile, buildRequest: buildRequest, startEdit: startEdit };
+  window.__composerTest = {
+    processImageFile: processImageFile, buildRequest: buildRequest,
+    startEdit: startEdit, deepLink: deepLink, setImage: setImage
+  };
 
   restoreDraft();
   render();
