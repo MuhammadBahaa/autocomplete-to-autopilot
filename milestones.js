@@ -96,10 +96,14 @@ window.MILESTONES = [
     description: 'Adopted Claude Pro and Claude Code as core engineering tools. Practised CLAUDE.md project initialization, file-based context, plan mode, implementation mode, terminal workflows, documentation lookup and repository-level development.',
   },
   {
-    title: 'Claude skills and plugins course',
+    title: 'Claude Cowork, Code, Skills and Plugins course',
     date: 'Jun 29, 2026',
-    description: 'Completed the Udemy course Claude - Master Claude Cowork, Claude Code, Skills & Plugins, strengthening practical knowledge of Claude Code, skills, plugins and agent-based workflows.',
+    description: 'Completed the Udemy course Claude - Master Claude Cowork, Claude Code, Skills & Plugins, continuing the same practical thread: putting AI inside real engineering work rather than beside it. The course covered Claude Code as a terminal-based agentic coding tool, skills as focused instructions an agent loads only when a workflow calls for them, plugins as distributable bundles of skills, commands, agents and MCP servers, and Cowork as an agentic workspace for everyday tasks outside the editor. The lasting value was less the tools themselves than the structure around them — AI-assisted code review, engineering workflow automation, reusable skills and plugins, agentic development workflows and automating daily tasks with Cowork.',
     stats: { courses: 1 },
+    certificate: {
+      title: 'Claude - Master Claude Cowork, Claude Code, Skills & Plugins',
+      image: 'attachments/claude-master-claude-cowork-claude-code-skills-plugins-course-certificate.jpg',
+    },
   },
   {
     title: 'Company engineering harness contribution',
