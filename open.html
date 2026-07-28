@@ -78,30 +78,44 @@
     if (eq > 0 && part.slice(0, eq) === 'u') raw = part.slice(eq + 1);
   });
   if (!raw) {
-    fail('This page opens a Claude Code session from the Milestone Composer. Open it from the composer’s button.');
+    fail('This page opens Claude Code from a link — use the Milestone Composer’s button or your sessions board.');
     return;
   }
 
   var url;
   try { url = decodeURIComponent(raw); } catch (e) { url = ''; }
-  // Public page: accept the one shape we mean to launch, nothing else.
-  if (url.indexOf('claude://code/new?') !== 0) {
+
+  // Public page: accept only the exact shapes we mean to launch, nothing else.
+  //   claude://code/new?…                  — a new session (Milestone Composer)
+  //   claude://resume?session=<uuid>       — focus an existing session (sessions board)
+  // The uuid is matched whole, so this can never redirect into an arbitrary scheme.
+  var RESUME = 'claude://resume?session=';
+  var UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  var isNew = url.indexOf('claude://code/new?') === 0;
+  var isResume = url.indexOf(RESUME) === 0 && UUID.test(url.slice(RESUME.length));
+  if (!isNew && !isResume) {
     fail('That link isn’t a Claude Code request, so it was not opened.');
     return;
   }
 
-  var params;
-  try { params = new URL(url).searchParams; } catch (e) { params = null; }
-  if (params) {
-    var folder = params.get('folder');
-    var q = params.get('q');
-    if (folder) { $('folder').textContent = '📁 ' + folder; $('folder').hidden = false; }
-    if (q) { $('prompt').textContent = q; $('prompt').hidden = false; }
+  if (isResume) {
+    $('head').textContent = 'Opening your session…';
+    $('folder').textContent = '↩ ' + url.slice(RESUME.length);
+    $('folder').hidden = false;
+  } else {
+    var params;
+    try { params = new URL(url).searchParams; } catch (e) { params = null; }
+    if (params) {
+      var folder = params.get('folder');
+      var q = params.get('q');
+      if (folder) { $('folder').textContent = '📁 ' + folder; $('folder').hidden = false; }
+      if (q) { $('prompt').textContent = q; $('prompt').hidden = false; }
+    }
+    $('foot').hidden = false;   // clipboard note only applies to a new-session request
   }
 
   $('go').href = url;
   $('actions').hidden = false;
-  $('foot').hidden = false;
 
   // Try straight away; the button stays for browsers that want a real click.
   setTimeout(function () { try { location.href = url; } catch (e) {} }, 60);
