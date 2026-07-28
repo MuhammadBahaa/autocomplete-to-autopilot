@@ -112,6 +112,10 @@
 
   .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   @media (max-width: 480px) { .row2 { grid-template-columns: 1fr; } }
+  .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(88px, 1fr)); gap: 8px; }
+  .stat-input { display: flex; flex-direction: column; }
+  .stat-input input { text-align: center; padding: 8px 6px; }
+  .stat-input label { margin: 4px 0 0; text-align: center; }
 
   .btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
   button {
@@ -223,6 +227,19 @@
           <p class="hint">Don't polish it yourself. Claude fixes the English and adds accurate detail about tools it knows — it won't invent personal claims or numbers you didn't state.</p>
         </div>
 
+        <div class="field">
+          <label>What did this build? <span class="soft">(optional — feeds the toolbox strip at the top of the site)</span></label>
+          <div class="stats-row">
+            <span class="stat-input"><input id="f-st-skills" type="number" min="0" step="1" placeholder="0"><label for="f-st-skills">skills</label></span>
+            <span class="stat-input"><input id="f-st-plugins" type="number" min="0" step="1" placeholder="0"><label for="f-st-plugins">plugins</label></span>
+            <span class="stat-input"><input id="f-st-agents" type="number" min="0" step="1" placeholder="0"><label for="f-st-agents">agents</label></span>
+            <span class="stat-input"><input id="f-st-commands" type="number" min="0" step="1" placeholder="0"><label for="f-st-commands">commands</label></span>
+            <span class="stat-input"><input id="f-st-scripts" type="number" min="0" step="1" placeholder="0"><label for="f-st-scripts">scripts</label></span>
+            <span class="stat-input"><input id="f-st-courses" type="number" min="0" step="1" placeholder="0"><label for="f-st-courses">courses</label></span>
+          </div>
+          <p class="hint">Count only what this milestone itself produced — leave 0 if it's already counted on another milestone.</p>
+        </div>
+
         <div class="row2">
           <div class="field">
             <label for="f-att-file">Attachment label <span class="soft">(optional)</span></label>
@@ -319,7 +336,8 @@
 (function () {
   var $ = function (id) { return document.getElementById(id); };
   var EXISTING = Array.isArray(window.EXISTING) ? window.EXISTING : [];
-  var fields = ['f-title', 'f-date', 'f-desc', 'f-att-file', 'f-att-note', 'f-cert-title'];
+  var fields = ['f-title', 'f-date', 'f-desc', 'f-att-file', 'f-att-note', 'f-cert-title',
+    'f-st-skills', 'f-st-plugins', 'f-st-agents', 'f-st-commands', 'f-st-scripts', 'f-st-courses'];
   var KEY = 'milestone-composer-draft-v3';
   var mode = { type: 'new', index: -1 };
   var image = null; // { dataUrl, kb }
@@ -335,6 +353,15 @@
   }
   function imgRepoPath() { return 'attachments/' + (val('f-img-name') || slug(val('f-att-file') || val('f-title')) + '.jpg'); }
   function certRepoPath() { return 'attachments/' + (val('f-cert-name') || slug((val('f-cert-title') || val('f-title')) + ' certificate') + '.jpg'); }
+  var STAT_KEYS = ['skills', 'plugins', 'agents', 'commands', 'scripts', 'courses'];
+  function statsPairs() {
+    var pairs = [];
+    STAT_KEYS.forEach(function (k) {
+      var n = parseInt(val('f-st-' + k), 10);
+      if (n > 0) pairs.push([k, n]);
+    });
+    return pairs;
+  }
 
   // ---------- request builders ----------
   function fieldLines() {
@@ -347,6 +374,11 @@
     }
     if (certImage || val('f-cert-title') || certExistingPath) {
       lines.push('certificate: title=' + (val('f-cert-title') || '(use the course/credential name)') + ' — shown as a framed image view on the card');
+    }
+    var sp = statsPairs();
+    if (sp.length) {
+      lines.push('stats (what this built — add as a stats: {} field on the entry): ' +
+        sp.map(function (p) { return p[0] + '=' + p[1]; }).join(', '));
     }
     return lines;
   }
@@ -419,6 +451,10 @@
     out.push('  title: ' + q(val('f-title') || 'Untitled') + ',');
     out.push('  date: ' + q(val('f-date') || 'Jul 2026') + ',');
     out.push('  description: ' + q(val('f-desc') || '') + ',');
+    var sp = statsPairs();
+    if (sp.length) {
+      out.push('  stats: { ' + sp.map(function (p) { return p[0] + ': ' + p[1]; }).join(', ') + ' },');
+    }
     if (val('f-att-file')) {
       out.push('  attachment: {');
       out.push('    file: ' + q(val('f-att-file')) + ',');
@@ -521,6 +557,9 @@
     $('f-cert-title').value = (m.certificate && m.certificate.title) || '';
     $('f-att-file').value = (m.attachment && m.attachment.file) || '';
     $('f-att-note').value = (m.attachment && m.attachment.note) || '';
+    STAT_KEYS.forEach(function (k) {
+      $('f-st-' + k).value = (m.stats && m.stats[k]) || '';
+    });
   }
 
   function startEdit(i) {
