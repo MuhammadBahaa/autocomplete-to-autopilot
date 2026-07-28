@@ -22,7 +22,10 @@
        a missing image file drops the whole block).
      certificate: { title: 'Course name', image: 'attachments/cert.jpg' }
        — shows the certificate as a framed image view on the card
-       (click to zoom). Upload it via the Milestone Composer.
+       (click to zoom). Upload it via the Milestone Composer. Each one
+       also counts toward the Certificates tile in the toolbox strip —
+       that tile is derived from this field, so there is no certificate
+       key in stats.
      stats: { skills: 1, plugins: 1, agents: 1, commands: 3, scripts: 4,
        courses: 1 } — what this milestone itself produced; any subset of
        those six keys, positive whole numbers only. The page sums every

@@ -20,6 +20,8 @@ All data lives in one file: [milestones.js](milestones.js). Open it, copy the te
 
 Optional per entry: `status: 'done' | 'progress' | 'planned'` adds a status pill (`planned` renders dimmed), `cvWorthy: true` adds a gold ★ badge, `attachment: { file, note, image }` shows the screenshot as a clickable thumbnail that opens full-size (`image` must point to a file in [attachments/](attachments/); `file` only names it for the alt text), `certificate: { title, image }` shows a certificate as a framed image view on the card (click to zoom), and `stats: { skills: 2, plugins: 1 }` counts what the milestone itself produced (keys: skills, plugins, agents, commands, scripts, courses) and feeds the toolbox strip at the top of the page — leave it out for milestones that built nothing countable. Without them, entries are plain milestones.
 
+The toolbox strip also shows a Certificates tile, counted straight from the `certificate` fields — upload one and the tile goes up on its own, so there is nothing to enter by hand.
+
 Three ways to do it, pick whichever is closest to hand:
 
 1. **Ask Claude Code** — "add a milestone: finished X on date Y, it's CV-worthy". It edits, commits and pushes; the site updates itself.

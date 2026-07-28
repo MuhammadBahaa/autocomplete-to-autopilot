@@ -54,7 +54,7 @@
   .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 10px; margin-top: 26px; }
   .stat {
     background: #1C1630; border: 1px solid #35294F; border-radius: 14px;
-    padding: 14px 8px 12px; text-align: center;
+    padding: 14px 6px 12px; text-align: center;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04);
   }
   .stat-num {
@@ -63,7 +63,7 @@
   }
   .stat-label {
     display: block; margin-top: 6px; font-family: 'Spline Sans Mono', monospace;
-    font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: #8F85A6;
+    font-size: 10.5px; letter-spacing: .05em; text-transform: uppercase; color: #8F85A6;
   }
 
   nav {
@@ -349,13 +349,19 @@
 
   var STAT_LABELS = [
     ['skills', 'Skills'], ['plugins', 'Plugins'], ['agents', 'Agents'],
-    ['commands', 'Commands'], ['scripts', 'Scripts'], ['courses', 'Courses']
+    ['commands', 'Commands'], ['scripts', 'Scripts'], ['courses', 'Courses'],
+    ['certificates', 'Certificates']
   ];
   var statTotals = {};
   data.forEach(function (m) {
+    // Certificates come from the certificate field itself, never from stats
+    if (m.certificate && m.certificate.image) {
+      statTotals.certificates = (statTotals.certificates || 0) + 1;
+    }
     var st = m.stats;
     if (!st || typeof st !== 'object') return;
     STAT_LABELS.forEach(function (pair) {
+      if (pair[0] === 'certificates') return;
       var v = st[pair[0]];
       if (typeof v === 'number' && isFinite(v) && v > 0 && Math.floor(v) === v) {
         statTotals[pair[0]] = (statTotals[pair[0]] || 0) + v;
