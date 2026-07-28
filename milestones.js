@@ -53,11 +53,11 @@ window.MILESTONES = [
   {
     title: 'AI and Developer Productivity course',
     date: 'Mar 15, 2026',
-    description: 'Completed the AI and Developer Productivity course, covering the practical application of artificial intelligence across everyday software development work — assisted code generation, refactoring, review, documentation and testing — and how those capabilities translate into developer productivity rather than novelty.',
+    description: 'Completed the LinkedIn Learning course AI and Developer Productivity, covering the practical application of artificial intelligence across everyday software development work — assisted code generation, refactoring, review, documentation and testing — and how those capabilities translate into developer productivity rather than novelty. The useful framing was treating each area as a specific kind of friction a model can absorb: the scaffolding and boilerplate that would otherwise be typed out by hand, a second pass over a change before a human reviewer sees it, and the documentation and test coverage that tend to be written last and trimmed first. Early enough in the timeline to set the expectation that AI belongs inside the normal development loop rather than alongside it.',
     stats: { courses: 1 },
     certificate: {
       title: 'AI and Developer Productivity',
-      image: 'attachments/ai-and-developer-productivity-course-certificate.jpg',
+      image: 'attachments/ai-and-developer-productivity-certificate.jpg',
     },
   },
   {
