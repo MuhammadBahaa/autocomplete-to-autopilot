@@ -223,13 +223,6 @@
           <p class="hint">Don't polish it yourself. Claude fixes the English and adds accurate detail about tools it knows — it won't invent personal claims or numbers you didn't state.</p>
         </div>
 
-        <div class="field">
-          <label for="f-resources">Resources <span class="soft">(one per line, optional)</span></label>
-          <textarea id="f-resources" style="min-height:64px" placeholder="my-skill-name
-Course certificate | https://example.com/cert"></textarea>
-          <p class="hint">Plain name = reference note · add <span style="font-family:var(--mono)">| https://…</span> to make it a link.</p>
-        </div>
-
         <div class="row2">
           <div class="field">
             <label for="f-att-file">Attachment label <span class="soft">(optional)</span></label>
@@ -326,7 +319,7 @@ Course certificate | https://example.com/cert"></textarea>
 (function () {
   var $ = function (id) { return document.getElementById(id); };
   var EXISTING = Array.isArray(window.EXISTING) ? window.EXISTING : [];
-  var fields = ['f-title', 'f-date', 'f-desc', 'f-resources', 'f-att-file', 'f-att-note', 'f-cert-title'];
+  var fields = ['f-title', 'f-date', 'f-desc', 'f-att-file', 'f-att-note', 'f-cert-title'];
   var KEY = 'milestone-composer-draft-v3';
   var mode = { type: 'new', index: -1 };
   var image = null; // { dataUrl, kb }
@@ -340,9 +333,6 @@ Course certificate | https://example.com/cert"></textarea>
     return String(s || '').toLowerCase().replace(/\.[a-z0-9]+$/, '')
       .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'attachment';
   }
-  function parseResources() {
-    return val('f-resources') ? val('f-resources').split('\n').map(function (s) { return s.trim(); }).filter(Boolean) : [];
-  }
   function imgRepoPath() { return 'attachments/' + (val('f-img-name') || slug(val('f-att-file') || val('f-title')) + '.jpg'); }
   function certRepoPath() { return 'attachments/' + (val('f-cert-name') || slug((val('f-cert-title') || val('f-title')) + ' certificate') + '.jpg'); }
 
@@ -352,8 +342,6 @@ Course certificate | https://example.com/cert"></textarea>
     lines.push('title: ' + (val('f-title') || '(missing — ask me)'));
     lines.push('date: ' + (val('f-date') || '(missing — ask me)'));
     lines.push('description (rough): ' + (val('f-desc') || '(missing — ask me)'));
-    var res = parseResources();
-    lines.push('resources: ' + (res.length ? res.join(' ; ') : '(none)'));
     if (val('f-att-file') || val('f-att-note')) {
       lines.push('attachment: file=' + (val('f-att-file') || '(name it)') + ' — caption: ' + (val('f-att-note') || '(write a playful one)'));
     }
@@ -426,16 +414,11 @@ Course certificate | https://example.com/cert"></textarea>
     return 'Remove the milestone "' + orig.title + '" (date ' + orig.date + ') from milestones.js on my AI Milestones site (repo MuhammadBahaa/autocomplete-to-autopilot).\n\n' + FOOTER;
   }
   function buildRaw() {
-    var res = parseResources().map(function (r) {
-      var parts = r.split('|').map(function (p) { return p.trim(); });
-      return parts.length > 1 ? '{ label: ' + q(parts[0]) + ', url: ' + q(parts[1]) + ' }' : q(parts[0]);
-    });
     var out = [];
     out.push('{');
     out.push('  title: ' + q(val('f-title') || 'Untitled') + ',');
     out.push('  date: ' + q(val('f-date') || 'Jul 2026') + ',');
     out.push('  description: ' + q(val('f-desc') || '') + ',');
-    out.push('  resources: [' + res.join(', ') + '],');
     if (val('f-att-file')) {
       out.push('  attachment: {');
       out.push('    file: ' + q(val('f-att-file')) + ',');
@@ -536,9 +519,6 @@ Course certificate | https://example.com/cert"></textarea>
     $('f-date').value = m.date || '';
     $('f-desc').value = m.description || '';
     $('f-cert-title').value = (m.certificate && m.certificate.title) || '';
-    $('f-resources').value = (m.resources || []).map(function (r) {
-      return typeof r === 'string' ? r : (r.label + (r.url ? ' | ' + r.url : ''));
-    }).join('\n');
     $('f-att-file').value = (m.attachment && m.attachment.file) || '';
     $('f-att-note').value = (m.attachment && m.attachment.note) || '';
   }

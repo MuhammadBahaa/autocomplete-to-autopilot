@@ -103,9 +103,6 @@
     font-family: 'Spline Sans Mono', monospace; font-size: 12.5px; padding: 4px 10px;
     border-radius: 8px; background: #231C39; color: #C9C0DC; border: 1px solid #35294F;
   }
-  .resources { display: flex; flex-direction: column; gap: 6px; border-top: 1px dashed #35294F; padding-top: 12px; }
-  .resources a { font-size: 14px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; }
-  .resource-note { font-family: 'Spline Sans Mono', monospace; font-size: 13px; color: #8F85A6; }
   .attachment { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; border-top: 1px dashed #35294F; padding-top: 12px; }
   .attachment-thumb {
     height: 56px; width: auto; max-width: 140px; object-fit: cover; display: block;
@@ -265,7 +262,6 @@
     }
 
     var ring = ((!hasStatus || m.status === 'done') && m.cvWorthy) ? 'var(--accent)' : s.ring;
-    var resources = Array.isArray(m.resources) ? m.resources : [];
 
     html +=
       '<article id="' + esc(anchorId) + '" class="rise">' +
@@ -280,14 +276,6 @@
           '</div>' +
           '<h2>' + esc(m.title) + '</h2>' +
           '<p class="desc">' + esc(m.description) + '</p>' +
-          (resources.length ?
-            '<div class="resources">' + resources.map(function (r) {
-              // strings (or objects without url) are plain references; objects with url are links
-              if (typeof r === 'string' || !r.url) {
-                return '<span class="resource-note">▸ ' + esc(typeof r === 'string' ? r : r.label) + '</span>';
-              }
-              return '<a href="' + esc(r.url) + '" target="_blank" rel="noopener noreferrer">↗ ' + esc(r.label) + '</a>';
-            }).join('') + '</div>' : '') +
           (m.attachment && m.attachment.file ?
             '<div class="attachment">' +
               (m.attachment.image ?

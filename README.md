@@ -15,7 +15,6 @@ All data lives in one file: [milestones.js](milestones.js). Open it, copy the te
   title: 'What you achieved',
   date: '23 Jul 2026',            // day is optional: 'Jul 2026' works too
   description: 'One or two sentences about what you did and learned.',
-  resources: ['artifact name', { label: 'GitHub repo', url: 'https://github.com/...' }],
 },
 ```
 

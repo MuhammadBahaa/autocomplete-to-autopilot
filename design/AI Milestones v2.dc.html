@@ -57,13 +57,6 @@
             </div>
             <h2 style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 24px; margin: 0 0 8px; letter-spacing: -0.01em; color: #F1ECFA;">{{ m.title }}</h2>
             <p style="font-size: 15.5px; line-height: 1.65; color: #A79DBE; margin: 0 0 16px; text-wrap: pretty;">{{ m.description }}</p>
-            <sc-if value="{{ m.hasResources }}" hint-placeholder-val="{{ false }}">
-              <div style="display: flex; flex-direction: column; gap: 6px; border-top: 1px dashed #35294F; padding-top: 12px;">
-                <sc-for list="{{ m.resources }}" as="r" hint-placeholder-count="1">
-                  <a href="{{ r.url }}" target="_blank" style="font-size: 14px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px;">↗ {{ r.label }}</a>
-                </sc-for>
-              </div>
-            </sc-if>
           </div>
         </article>
       </sc-for>
@@ -80,7 +73,7 @@ class Component extends DCLogic {
   // ======================================================================
   // EDIT YOUR MILESTONES HERE (newest last). Fields:
   //   title, date ('12 Jan 2026' — day optional), status: 'done' | 'progress' | 'planned',
-  //   description, resources: [{label, url}], cvWorthy: true/false
+  //   description, cvWorthy: true/false
   // ======================================================================
   static MILESTONES = [
     {
@@ -88,7 +81,6 @@ class Component extends DCLogic {
       date: '12 Jan 2026',
       status: 'done',
       description: 'Got comfortable with Python, NumPy and Pandas — the toolkit behind everything that follows.',
-      resources: [{ label: 'Course notes', url: '#' }],
       cvWorthy: false,
     },
     {
@@ -96,7 +88,6 @@ class Component extends DCLogic {
       date: '25 Feb 2026',
       status: 'done',
       description: 'Finished an intro ML course: regression, classification, train/test splits, and evaluating models properly.',
-      resources: [],
       cvWorthy: true,
     },
     {
@@ -104,7 +95,6 @@ class Component extends DCLogic {
       date: '8 Apr 2026',
       status: 'done',
       description: 'Built and trained a small neural net by hand — backprop finally clicked.',
-      resources: [{ label: 'GitHub repo', url: '#' }],
       cvWorthy: true,
     },
     {
@@ -112,7 +102,6 @@ class Component extends DCLogic {
       date: '15 Jun 2026',
       status: 'progress',
       description: 'Learning to design, test and iterate prompts — few-shot, chain-of-thought, and structured outputs.',
-      resources: [],
       cvWorthy: false,
     },
     {
@@ -120,7 +109,6 @@ class Component extends DCLogic {
       date: '1 Aug 2026',
       status: 'planned',
       description: 'A retrieval-augmented chatbot over my own notes — embeddings, vector search, and a clean chat UI.',
-      resources: [],
       cvWorthy: true,
     },
     {
@@ -128,7 +116,6 @@ class Component extends DCLogic {
       date: '10 Oct 2026',
       status: 'planned',
       description: 'Fine-tune an open-source model on a custom dataset and publish the results.',
-      resources: [],
       cvWorthy: true,
     },
   ];
@@ -174,7 +161,6 @@ class Component extends DCLogic {
         statusLabel: s.label, statusBg: s.bg, statusFg: s.fg, statusBorder: s.border,
         dotBg: s.dotBg, dotFg: s.dotFg, dotRing: s.ring === '#1FA968' && m.cvWorthy ? accent : s.ring,
         cardOpacity: s.opacity,
-        hasResources: (m.resources || []).length > 0,
       };
     });
     return {

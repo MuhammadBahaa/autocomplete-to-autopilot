@@ -9,10 +9,6 @@
      title: 'What you achieved',
      date: '23 Jul 2026',            // day is optional: 'Jul 2026' works too
      description: 'One or two sentences about what you did and learned.',
-     resources: [                    // [] if none
-       'artifact or file name',      // plain string = reference note
-       { label: 'GitHub repo', url: 'https://github.com/...' }, // object = link
-     ],
    },
 
    Optional per entry:
@@ -38,19 +34,16 @@ window.MILESTONES = [
     title: 'AI assistants as shortcuts',
     date: '2025 - Jan 2026',
     description: 'Used Copilot, Gemini and ChatGPT as day-to-day shortcuts for generating code, answering technical questions, rewriting communication and accelerating individual development tasks. At this stage, AI was mainly a faster assistant rather than part of a structured engineering workflow.',
-    resources: [],
   },
   {
     title: 'Context-aware AI engineering',
     date: 'Jan 2026 - Apr 2026',
     description: 'Moved from isolated prompts to context-aware AI work by giving agents real repository, architecture and business context. Used this approach while driving a large cards refactor covering broad and deeply connected parts of the application, which reached testing with only two reported bugs.',
-    resources: [],
   },
   {
     title: 'AI and Developer Productivity course',
     date: 'Mar 15, 2026',
     description: 'Completed the AI and Developer Productivity course, covering the practical application of artificial intelligence across everyday software development work — assisted code generation, refactoring, review, documentation and testing — and how those capabilities translate into developer productivity rather than novelty.',
-    resources: ['AI and Developer Productivity certificate'],
     certificate: {
       title: 'AI and Developer Productivity',
       image: 'attachments/ai-and-developer-productivity-course-certificate.jpg',
@@ -60,13 +53,11 @@ window.MILESTONES = [
     title: 'Discovery of agent skills',
     date: 'Late Mar 2026',
     description: 'Discovered the agent skill concept and began moving beyond large context files toward reusable, focused instructions that agents could load only when a specific workflow was required.',
-    resources: [],
   },
   {
     title: 'Going steady with Cursor',
     date: '4 Apr 2026',
     description: 'Upgraded from trial curiosity to a paid Cursor Pro subscription — the first official line item in the AI tooling budget. Anysphere’s AI-native VS Code fork, with Tab autocomplete, Cmd+K inline edits and a codebase-aware Agent mode, was now a keeper, not an experiment.',
-    resources: [],
     attachment: {
       file: 'welcome-to-cursor.eml',
       note: 'Receipt attached — no going back after this one.',
@@ -77,13 +68,11 @@ window.MILESTONES = [
     title: 'Cursor-based agent workflows',
     date: 'Apr 2026 - May 2026',
     description: 'Used Cursor Pro for repository-aware coding, custom-agent experimentation, automated bug handling, documentation generation, testing workflows and multi-repository agent automation.',
-    resources: [],
   },
   {
     title: 'Moving in with Claude',
     date: '4 Jun 2026',
     description: 'Subscribed to Claude Pro. The welcome email promised a first commit within five minutes — an accurate forecast, judging by the rest of this timeline.',
-    resources: [],
     attachment: {
       file: 'welcome-to-claude-code.eml',
       note: '“Your Claude Code journey starts now.” — it really did. 🚀',
@@ -94,154 +83,116 @@ window.MILESTONES = [
     title: 'Claude Code adoption',
     date: 'Jun 2026 - Present',
     description: 'Adopted Claude Pro and Claude Code as core engineering tools. Practised CLAUDE.md project initialization, file-based context, plan mode, implementation mode, terminal workflows, documentation lookup and repository-level development.',
-    resources: ['Claude Pro', 'Claude Code'],
   },
   {
     title: 'Claude skills and plugins course',
     date: 'Jun 29, 2026',
     description: 'Completed the Udemy course Claude - Master Claude Cowork, Claude Code, Skills & Plugins, strengthening practical knowledge of Claude Code, skills, plugins and agent-based workflows.',
-    resources: [
-      'Claude - Master Claude Cowork, Claude Code, Skills & Plugins',
-    ],
   },
   {
     title: 'Company engineering harness contribution',
     date: 'Jun 2026 - Present',
     description: 'Contributed to improving the engineering harness used at CoorB and Neo by building reusable agent skills, commands, scripts and contextual workflows for Android engineering, Figma review and localization.',
-    resources: ['CoorB engineering harness', 'Neo Android repository'],
   },
   {
     title: 'Android Figma extractor refactor',
     date: 'Jun 2026',
     description: 'Revamped the Android Figma design extractor into a generic, reusable and ledger-first workflow. Reduced the main agent body from roughly 298 lines to about 104 lines and moved approximately 210 lines of detailed guidance into four focused reference files.',
-    resources: ['android-figma-design-extractor'],
   },
   {
     title: 'Ledger-first Figma extraction',
     date: 'Jun 2026',
     description: 'Introduced a ledger-only operating mode for extracting structured Figma information before implementation. The workflow standardized token rules, asset handling, string extraction and build-ready design brief generation.',
-    resources: ['android-figma-design-extractor'],
   },
   {
     title: 'Platform-agnostic Figma Design QA skill',
     date: 'Jun 2026',
     description: 'Created a platform-agnostic Figma Design QA skill that reviews designs before code implementation. It identifies Arabic and English inconsistencies, legacy tokens, missing tokens, unmappable values and other designer-side issues.',
-    resources: ['figma-design-qa'],
   },
   {
     title: 'Approval-gated Figma comments',
     date: 'Jun 2026',
     description: 'Added support for posting review feedback directly to Figma through MCP. The workflow uses multiple approval gates to prevent an agent from publishing comments without explicit confirmation.',
-    resources: ['figma-design-qa', 'Figma MCP pull request'],
   },
   {
     title: 'Android code-versus-Figma comparison skill',
     date: 'Jun 2026',
     description: 'Created a read-only skill that compares Android XML or Jetpack Compose implementations against Figma. It produces separate reports for designer-side issues and code-versus-design mismatches.',
-    resources: ['android-figma-comparison'],
   },
   {
     title: 'Design QA integration into feature development',
     date: 'Jun 2026',
     description: 'Added a non-blocking hint to the Android new-feature workflow so engineers are reminded to run design QA when a Figma design is available, without forcing the workflow to stop.',
-    resources: ['Android new-feature flow'],
   },
   {
     title: 'Neo Android translations plugin',
     date: 'Jun 2026 - Jul 2026',
     description: 'Created the coorb-neo-android plugin to centralize and automate translation workflows for the Neo Android project.',
-    resources: ['coorb-neo-android'],
   },
   {
     title: 'Neo translations skill',
     date: 'Jun 2026 - Jul 2026',
     description: 'Built a local-first translation skill with target-branch validation, duplicate detection, Arabic and Hindi drafting, Babelish synchronization and merge-request creation.',
-    resources: ['neo-translations'],
   },
   {
     title: 'Translation environment setup skill',
     date: 'Jun 2026 - Jul 2026',
     description: 'Created a setup and repair skill that checks whether the translation environment is correctly configured and fixes missing or invalid setup requirements.',
-    resources: ['neo-translations-setup'],
   },
   {
     title: 'Translation commands and read-only agent',
     date: 'Jun 2026 - Jul 2026',
     description: 'Added reusable translation commands and a read-only extraction agent. The workflow includes setup, string addition, string updates and a ledger-oriented agent for inspecting translation data without modifying it.',
-    resources: [
-      '/setup-translations',
-      '/add-strings',
-      '/update-strings',
-      'translation-extractor',
-    ],
   },
   {
     title: 'Translation automation scripts',
     date: 'Jun 2026 - Jul 2026',
     description: 'Implemented scripts for environment checking, repository setup, CSV retrieval, translation search, CSV validation, local Android string generation and merge-request creation.',
-    resources: [
-      'check-setup',
-      'setup_repo',
-      'fetch_csv',
-      'search_strings',
-      'validate_csv',
-      'generate_local_strings',
-      'create_mr',
-    ],
   },
   {
     title: 'Skills, commands and sub-agent architecture',
     date: 'Jun 2026 - Present',
     description: 'Developed a clear model for separating persistent project rules, reusable skills, explicit commands and specialized sub-agents. Evaluated when to use plan mode, skill-based workflows and brainstorming gates without creating conflicting instructions.',
-    resources: ['Superpowers skills framework'],
   },
   {
     title: 'Skill-writing and review methodology',
     date: 'Jun 2026 - Present',
     description: 'Studied and applied skill-writing methodology and review rules, including progressive disclosure, concise descriptions, avoiding duplicated examples and converting real evaluation failures into explicit workflow rules.',
-    resources: ['Superpowers writing-skills'],
   },
   {
     title: 'Multi-agent engineering workflow',
     date: 'Jul 2026 - Present',
     description: 'Started structuring engineering workflows that assign different tasks to Claude, Codex and Copilot according to their strengths, instead of expecting one agent to handle planning, implementation, review and validation equally well.',
-    resources: [],
   },
   {
     title: 'AI-assisted Android practice system',
     date: 'Jul 2026',
     description: 'Established a twice-weekly practical learning routine focused on AI-assisted Android engineering with ChatGPT, Cursor, Claude Code and Copilot. The routine covers prompting, code review, Figma QA and translation workflows with exercises and reusable prompt patterns.',
-    resources: ['Twice-weekly AI engineering practice'],
   },
   {
     title: 'Automation engines and AI agents',
     date: 'Jul 2026',
     description: 'Built a practical understanding of the difference between an automation engine, an AI agent and an external model. Explored how n8n acts as an orchestration backend while agents perform reasoning and tools or MCP servers provide actions and data access.',
-    resources: ['n8n trial workspace'],
   },
   {
     title: 'Notion as an AI knowledge layer',
     date: 'Jul 2026',
     description: 'Adopted Notion Plus and Notion AI and positioned Notion as the knowledge and planning layer for a personal Life OS supported by AI agents.',
-    resources: ['Notion Plus', 'Notion AI', 'Life OS template'],
   },
   {
     title: 'Life OS master-agent design',
     date: 'Jul 18, 2026',
     description: 'Designed a Life OS master agent with Notion as the planning layer. The design covers course planning, work planning, daily and weekly planning, reviews, replanning, startup behaviour and confirmation requirements before making changes.',
-    resources: ['Life OS master-agent design'],
   },
   {
     title: 'Life OS implementation plan',
     date: 'Jul 18, 2026',
     description: 'Created an implementation plan for the Life OS agent with verified Notion mappings, seven operating modes, confirmation-gated writes, Todoist as the execution layer and evaluation scenarios for planning and replanning workflows.',
-    resources: ['Life OS master-agent implementation plan'],
   },
   {
     title: 'ReadCraft Plugin Released',
     date: 'Jul 22, 2026',
     description: 'Released the plugin publicly, built around two core capabilities: reviewing skills and plugins with technical improvement suggestions, and helping people read and review complex English skill files more easily. Announced the release publicly, which turned a design concept into a distributed, installable product.',
-    resources: ['Superpowers writing-skills'],
     attachment: {
       file: 'release-announcement.png',
       note: 'Shipped it, then said it out loud. 🚀',
@@ -252,6 +203,5 @@ window.MILESTONES = [
     title: 'From AI user to AI workflow builder',
     date: '2025 - Present',
     description: 'Progressed from using AI for individual shortcuts to building context-aware workflows, reusable skills, engineering harnesses, design and localization automation, multi-agent systems and structured AI product concepts.',
-    resources: [],
   },
 ];
