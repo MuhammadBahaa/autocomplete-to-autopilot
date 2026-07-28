@@ -23,6 +23,12 @@
      certificate: { title: 'Course name', image: 'attachments/cert.jpg' }
        — shows the certificate as a framed image view on the card
        (click to zoom). Upload it via the Milestone Composer.
+     stats: { skills: 1, plugins: 1, agents: 1, commands: 3, scripts: 4,
+       courses: 1 } — what this milestone itself produced; any subset of
+       those six keys, positive whole numbers only. The page sums every
+       entry's stats into the toolbox strip at the top. Leave it out for
+       milestones that didn't build anything countable, and don't repeat
+       counts already claimed by another entry.
    ============================================================= */
 
 window.CONFIG = {
@@ -45,6 +51,7 @@ window.MILESTONES = [
     title: 'AI and Developer Productivity course',
     date: 'Mar 15, 2026',
     description: 'Completed the AI and Developer Productivity course, covering the practical application of artificial intelligence across everyday software development work — assisted code generation, refactoring, review, documentation and testing — and how those capabilities translate into developer productivity rather than novelty.',
+    stats: { courses: 1 },
     certificate: {
       title: 'AI and Developer Productivity',
       image: 'attachments/ai-and-developer-productivity-course-certificate.jpg',
@@ -89,6 +96,7 @@ window.MILESTONES = [
     title: 'Claude skills and plugins course',
     date: 'Jun 29, 2026',
     description: 'Completed the Udemy course Claude - Master Claude Cowork, Claude Code, Skills & Plugins, strengthening practical knowledge of Claude Code, skills, plugins and agent-based workflows.',
+    stats: { courses: 1 },
   },
   {
     title: 'Company engineering harness contribution',
@@ -99,6 +107,7 @@ window.MILESTONES = [
     title: 'Android Figma extractor refactor',
     date: 'Jun 2026',
     description: 'Revamped the Android Figma design extractor into a generic, reusable and ledger-first workflow. Reduced the main agent body from roughly 298 lines to about 104 lines and moved approximately 210 lines of detailed guidance into four focused reference files.',
+    stats: { agents: 1 },
   },
   {
     title: 'Ledger-first Figma extraction',
@@ -109,6 +118,7 @@ window.MILESTONES = [
     title: 'Platform-agnostic Figma Design QA skill',
     date: 'Jun 2026',
     description: 'Created a platform-agnostic Figma Design QA skill that reviews designs before code implementation. It identifies Arabic and English inconsistencies, legacy tokens, missing tokens, unmappable values and other designer-side issues.',
+    stats: { skills: 1 },
   },
   {
     title: 'Approval-gated Figma comments',
@@ -119,6 +129,7 @@ window.MILESTONES = [
     title: 'Android code-versus-Figma comparison skill',
     date: 'Jun 2026',
     description: 'Created a read-only skill that compares Android XML or Jetpack Compose implementations against Figma. It produces separate reports for designer-side issues and code-versus-design mismatches.',
+    stats: { skills: 1 },
   },
   {
     title: 'Design QA integration into feature development',
@@ -129,26 +140,31 @@ window.MILESTONES = [
     title: 'Neo Android translations plugin',
     date: 'Jun 2026 - Jul 2026',
     description: 'Created the coorb-neo-android plugin to centralize and automate translation workflows for the Neo Android project.',
+    stats: { plugins: 1 },
   },
   {
     title: 'Neo translations skill',
     date: 'Jun 2026 - Jul 2026',
     description: 'Built a local-first translation skill with target-branch validation, duplicate detection, Arabic and Hindi drafting, Babelish synchronization and merge-request creation.',
+    stats: { skills: 1 },
   },
   {
     title: 'Translation environment setup skill',
     date: 'Jun 2026 - Jul 2026',
     description: 'Created a setup and repair skill that checks whether the translation environment is correctly configured and fixes missing or invalid setup requirements.',
+    stats: { skills: 1 },
   },
   {
     title: 'Translation commands and read-only agent',
     date: 'Jun 2026 - Jul 2026',
     description: 'Added reusable translation commands and a read-only extraction agent. The workflow includes setup, string addition, string updates and a ledger-oriented agent for inspecting translation data without modifying it.',
+    stats: { agents: 1, commands: 5 },
   },
   {
     title: 'Translation automation scripts',
     date: 'Jun 2026 - Jul 2026',
     description: 'Implemented scripts for environment checking, repository setup, CSV retrieval, translation search, CSV validation, local Android string generation and merge-request creation.',
+    stats: { scripts: 7 },
   },
   {
     title: 'Skills, commands and sub-agent architecture',
@@ -184,6 +200,7 @@ window.MILESTONES = [
     title: 'Life OS master-agent design',
     date: 'Jul 18, 2026',
     description: 'Designed a Life OS master agent with Notion as the planning layer. The design covers course planning, work planning, daily and weekly planning, reviews, replanning, startup behaviour and confirmation requirements before making changes.',
+    stats: { agents: 1 },
   },
   {
     title: 'Life OS implementation plan',
@@ -194,6 +211,7 @@ window.MILESTONES = [
     title: 'ReadCraft Plugin Released',
     date: 'Jul 22, 2026',
     description: 'Released the plugin publicly, built around two core capabilities: reviewing skills and plugins with technical improvement suggestions, and helping people read and review complex English skill files more easily. Announced the release publicly, which turned a design concept into a distributed, installable product.',
+    stats: { skills: 2, plugins: 1 },
     attachment: {
       file: 'release-announcement.png',
       note: 'Shipped it, then said it out loud. 🚀',
