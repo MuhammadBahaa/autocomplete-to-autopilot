@@ -417,7 +417,7 @@ git push origin main
 GitHub Pages redeploys in ~1–2 minutes. Then:
 
 ```bash
-curl -s https://muhammadbahaa.github.io/autocomplete-to-autopilot/milestones.js | grep -c 'stats:'
+curl -s https://muhammadbahaa.github.io/autocomplete-to-autopilot/milestones.js | grep -cE '^    stats:'
 ```
 
 Expected: `12`. If `0`, wait a minute and retry — Pages may still be building. Optionally open the live URL in the preview pane and confirm the strip shows 6 / 2 / 3 / 5 / 7 / 2.
