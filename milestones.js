@@ -16,9 +16,10 @@
        ('planned' renders dimmed).
      cvWorthy: true — adds the gold ★ CV-worthy badge.
      attachment: { file: 'welcome.eml', note: 'a playful caption',
-       image: 'attachments/pic.png' } — adds a 📎 email-style chip at
-       the card's bottom; with image, a clickable thumbnail opens it
-       full-size (missing image files degrade to the plain chip).
+       image: 'attachments/pic.png' } — shows the screenshot as a
+       thumbnail at the card's bottom; click to open it full-size.
+       image is required (file only names it for the alt text, and
+       a missing image file drops the whole block).
      certificate: { title: 'Course name', image: 'attachments/cert.jpg' }
        — shows the certificate as a framed image view on the card
        (click to zoom). Upload it via the Milestone Composer.

@@ -110,16 +110,6 @@
     transition: border-color .15s ease;
   }
   .attachment-thumb:hover { border-color: var(--accent); }
-  .attachment-chip {
-    font-family: 'Spline Sans Mono', monospace; font-size: 12.5px; padding: 5px 12px;
-    border-radius: 10px; background: #231C39; color: #C9C0DC; border: 1px dashed #4A3D6B;
-    transform: rotate(-1deg); display: inline-flex; align-items: center; gap: 6px;
-    transition: border-color .15s ease, color .15s ease;
-  }
-  .attachment-chip.is-clickable { cursor: pointer; }
-  .attachment-chip.is-clickable::after { content: '↗'; color: #A78BFF; }
-  .attachment-chip.is-clickable:hover { border-color: var(--accent); color: #F1ECFA; }
-  .attachment-chip.is-clickable:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .attachment-note { font-size: 13px; color: #8F85A6; font-style: italic; }
   .certificate { border-top: 1px dashed #35294F; padding-top: 14px; }
   .certificate-img {
@@ -276,11 +266,9 @@
           '</div>' +
           '<h2>' + esc(m.title) + '</h2>' +
           '<p class="desc">' + esc(m.description) + '</p>' +
-          (m.attachment && m.attachment.file ?
+          (m.attachment && m.attachment.image ?
             '<div class="attachment">' +
-              (m.attachment.image ?
-                '<img class="attachment-thumb" src="' + esc(m.attachment.image) + '" alt="Attachment: ' + esc(m.attachment.file) + '" loading="lazy" onerror="this.remove()">' : '') +
-              '<span class="attachment-chip"' + (m.attachment.image ? ' data-image="' + esc(m.attachment.image) + '"' : '') + '>📎 ' + esc(m.attachment.file) + '</span>' +
+              '<img class="attachment-thumb" src="' + esc(m.attachment.image) + '" alt="Attachment: ' + esc(m.attachment.file || m.title) + '" loading="lazy" onerror="this.parentElement.remove()">' +
               (m.attachment.note ? '<span class="attachment-note">' + esc(m.attachment.note) + '</span>' : '') +
             '</div>' : '') +
           (m.certificate && m.certificate.image ?
@@ -326,31 +314,9 @@
     lightbox.classList.add('open');
   }
 
-  // Chips become clickable only once their image is confirmed to exist,
-  // so entries whose screenshot isn't in attachments/ yet stay plain.
-  itemsEl.querySelectorAll('.attachment-chip[data-image]').forEach(function (chip) {
-    var probe = new Image();
-    probe.onload = function () {
-      chip.classList.add('is-clickable');
-      chip.setAttribute('role', 'button');
-      chip.setAttribute('tabindex', '0');
-      chip.setAttribute('aria-label', 'View attachment ' + chip.textContent.trim());
-    };
-    probe.src = chip.getAttribute('data-image');
-  });
-
   itemsEl.addEventListener('click', function (e) {
     var thumb = e.target.closest('.attachment-thumb, .certificate-img');
-    if (thumb) { openLightbox(thumb.src, thumb.alt); return; }
-    var chip = e.target.closest('.attachment-chip.is-clickable');
-    if (chip) openLightbox(chip.getAttribute('data-image'), chip.textContent.trim());
-  });
-  itemsEl.addEventListener('keydown', function (e) {
-    if (e.key !== 'Enter' && e.key !== ' ') return;
-    var chip = e.target.closest ? e.target.closest('.attachment-chip.is-clickable') : null;
-    if (!chip) return;
-    e.preventDefault();
-    openLightbox(chip.getAttribute('data-image'), chip.textContent.trim());
+    if (thumb) openLightbox(thumb.src, thumb.alt);
   });
   lightbox.addEventListener('click', function () { lightbox.classList.remove('open'); });
   document.addEventListener('keydown', function (e) {
