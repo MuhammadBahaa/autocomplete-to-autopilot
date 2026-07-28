@@ -66,9 +66,9 @@ window.MILESTONES = [
     description: 'Discovered the agent skill concept and began moving beyond large context files toward reusable, focused instructions that agents could load only when a specific workflow was required.',
   },
   {
-    title: 'Going steady with Cursor',
+    title: 'Getting started with Cursor',
     date: '4 Apr 2026',
-    description: 'Upgraded from trial curiosity to a paid Cursor Pro subscription — the first official line item in the AI tooling budget. Anysphere’s AI-native VS Code fork, with Tab autocomplete, Cmd+K inline edits and a codebase-aware Agent mode, was now a keeper, not an experiment.',
+    description: 'Signed up for Cursor Pro and started coding in it alongside GitHub Copilot. Anysphere’s AI-native fork of VS Code added Tab autocomplete, Cmd+K inline edits and codebase-aware chat next to Copilot’s inline completions. It was also the first real step toward context awareness: instead of pasting a snippet into a chat window, the editor could index the repository and pull in the files, symbols and documentation a change actually touched — and the quality of an answer turned out to depend less on the wording of the prompt than on what the model was allowed to see.',
     attachment: {
       file: 'welcome-to-cursor.eml',
       note: 'Receipt attached — no going back after this one.',
