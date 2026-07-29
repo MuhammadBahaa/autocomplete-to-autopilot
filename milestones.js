@@ -76,11 +76,6 @@ window.MILESTONES = [
     },
   },
   {
-    title: 'Cursor-based agent workflows',
-    date: 'Apr 2026 - May 2026',
-    description: 'Used Cursor Pro for repository-aware coding, custom-agent experimentation, automated bug handling, documentation generation, testing workflows and multi-repository agent automation.',
-  },
-  {
     title: 'Moving in with Claude',
     date: '4 Jun 2026',
     description: 'Subscribed to Claude Pro. The welcome email promised a first commit within five minutes — an accurate forecast, judging by the rest of this timeline.',
@@ -104,11 +99,6 @@ window.MILESTONES = [
       title: 'Claude - Master Claude Cowork, Claude Code, Skills & Plugins',
       image: 'attachments/claude-master-claude-cowork-claude-code-skills-plugins-course-certificate.jpg',
     },
-  },
-  {
-    title: 'Company engineering harness contribution',
-    date: 'Jun 2026 - Present',
-    description: 'Contributed to improving the engineering harness used at CoorB and Neo by building reusable agent skills, commands, scripts and contextual workflows for Android engineering, Figma review and localization.',
   },
   {
     title: 'Android Figma extractor refactor',
@@ -136,8 +126,8 @@ window.MILESTONES = [
   {
     title: 'Neo Android translations plugin',
     date: 'Jun 2026 - Jul 2026',
-    description: 'Created the coorb-neo-android plugin to centralize and automate translation workflows for the Neo Android project.',
-    stats: { plugins: 1 },
+    description: 'Created the Android translations plugin to centralize and automate translation workflows for the Neo Android project. Alongside the skills it bundles slash commands for adding and updating strings and a read-only extractor agent whose only job is to report where a given piece of copy already exists across the shared translation file, so the decision to reuse or create is made against evidence rather than a guess.',
+    stats: { plugins: 1, agents: 1, commands: 3 },
   },
   {
     title: 'Neo translations skill',
@@ -156,6 +146,12 @@ window.MILESTONES = [
     date: 'Jun 2026 - Jul 2026',
     description: 'Implemented scripts for environment checking, repository setup, CSV retrieval, translation search, CSV validation, local Android string generation and merge-request creation.',
     stats: { scripts: 7 },
+  },
+  {
+    title: 'Neo merge-request and remote-config skills',
+    date: 'Jun 2026 - Jul 2026',
+    description: 'Grew the Neo Android plugin past translations into everyday app work. One skill opens or updates a merge request through a fixed description template, refusing to run from a protected branch or from the wrong checkout, and blocking a push until unit tests and static analysis pass. Another captures the project’s remote-config pattern so a new feature flag lands with the correct default, the right accessor type for its value and a named handoff for the server-side key — the part that is easy to forget and leaves a flag dead on arrival.',
+    stats: { skills: 2, commands: 2, scripts: 4 },
   },
   {
     title: 'Multi-agent engineering workflow',
@@ -177,6 +173,18 @@ window.MILESTONES = [
     title: 'Life OS implementation plan',
     date: 'Jul 18, 2026',
     description: 'Created an implementation plan for the Life OS agent with verified Notion mappings, seven operating modes, confirmation-gated writes, Todoist as the execution layer and evaluation scenarios for planning and replanning workflows.',
+  },
+  {
+    title: 'Day and week planning skills',
+    date: 'Jul 21, 2026',
+    description: 'Turned the Life OS design into a working planning plugin sitting on top of the Notion knowledge layer: four skills that build a realistic day from calendar and task inputs, rebuild the remainder of a day after a delay or an interruption, close the day by deciding which unfinished work is a deliberate carryover, and plan a week as three priorities with time actually attached. What made them useful was refusing to flatter the input — an overloaded day is shown as trade-offs rather than a schedule where everything fits, and a review treats a missed block as evidence for the next plan rather than a verdict on the last one.',
+    stats: { skills: 4, plugins: 1 },
+  },
+  {
+    title: 'Fixing at the right scope',
+    date: 'Jul 21, 2026',
+    description: 'Split a general engineering skill out of the client plugin, since the judgement it encodes was never client-specific. Given a root cause that is already understood, it decides where the fix belongs — and guards against the tempting one-line change to a shared utility that repairs one screen while quietly changing behaviour for every other caller and hiding the local mistake that actually caused the bug. It also insists on reading the history of shared lines before touching them, and limits tidying to lines the fix already changes.',
+    stats: { skills: 1, plugins: 1 },
   },
   {
     title: 'ReadCraft Plugin Released',
