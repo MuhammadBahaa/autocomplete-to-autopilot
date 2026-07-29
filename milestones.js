@@ -149,7 +149,7 @@ window.MILESTONES = [
   },
   {
     title: 'Neo merge-request and remote-config skills',
-    date: 'Jun 2026 - Jul 2026',
+    date: '15 Jun 2026',
     description: 'Grew the Neo Android plugin past translations into everyday app work. One skill opens or updates a merge request through a fixed description template, refusing to run from a protected branch or from the wrong checkout, and blocking a push until unit tests and static analysis pass. Another captures the project’s remote-config pattern so a new feature flag lands with the correct default, the right accessor type for its value and a named handoff for the server-side key — the part that is easy to forget and leaves a flag dead on arrival.',
     stats: { skills: 2, commands: 2, scripts: 4 },
   },
