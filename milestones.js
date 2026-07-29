@@ -128,20 +128,10 @@ window.MILESTONES = [
     stats: { skills: 1 },
   },
   {
-    title: 'Approval-gated Figma comments',
-    date: 'Jun 2026',
-    description: 'Added support for posting review feedback directly to Figma through MCP. The workflow uses multiple approval gates to prevent an agent from publishing comments without explicit confirmation.',
-  },
-  {
     title: 'Android code-versus-Figma comparison skill',
     date: 'Jun 2026',
     description: 'Created a read-only skill that compares Android XML or Jetpack Compose implementations against Figma. It produces separate reports for designer-side issues and code-versus-design mismatches.',
     stats: { skills: 1 },
-  },
-  {
-    title: 'Design QA integration into feature development',
-    date: 'Jun 2026',
-    description: 'Added a non-blocking hint to the Android new-feature workflow so engineers are reminded to run design QA when a Figma design is available, without forcing the workflow to stop.',
   },
   {
     title: 'Neo Android translations plugin',
@@ -162,41 +152,15 @@ window.MILESTONES = [
     stats: { skills: 1 },
   },
   {
-    title: 'Translation commands and read-only agent',
-    date: 'Jun 2026 - Jul 2026',
-    description: 'Added reusable translation commands and a read-only extraction agent. The workflow includes setup, string addition, string updates and a ledger-oriented agent for inspecting translation data without modifying it.',
-    stats: { agents: 1, commands: 5 },
-  },
-  {
     title: 'Translation automation scripts',
     date: 'Jun 2026 - Jul 2026',
     description: 'Implemented scripts for environment checking, repository setup, CSV retrieval, translation search, CSV validation, local Android string generation and merge-request creation.',
     stats: { scripts: 7 },
   },
   {
-    title: 'Skills, commands and sub-agent architecture',
-    date: 'Jun 2026 - Present',
-    description: 'Developed a clear model for separating persistent project rules, reusable skills, explicit commands and specialized sub-agents. Evaluated when to use plan mode, skill-based workflows and brainstorming gates without creating conflicting instructions.',
-  },
-  {
-    title: 'Skill-writing and review methodology',
-    date: 'Jun 2026 - Present',
-    description: 'Studied and applied skill-writing methodology and review rules, including progressive disclosure, concise descriptions, avoiding duplicated examples and converting real evaluation failures into explicit workflow rules.',
-  },
-  {
     title: 'Multi-agent engineering workflow',
     date: 'Jul 2026 - Present',
     description: 'Started structuring engineering workflows that assign different tasks to Claude, Codex and Copilot according to their strengths, instead of expecting one agent to handle planning, implementation, review and validation equally well.',
-  },
-  {
-    title: 'AI-assisted Android practice system',
-    date: 'Jul 2026',
-    description: 'Established a twice-weekly practical learning routine focused on AI-assisted Android engineering with ChatGPT, Cursor, Claude Code and Copilot. The routine covers prompting, code review, Figma QA and translation workflows with exercises and reusable prompt patterns.',
-  },
-  {
-    title: 'Automation engines and AI agents',
-    date: 'Jul 2026',
-    description: 'Built a practical understanding of the difference between an automation engine, an AI agent and an external model. Explored how n8n acts as an orchestration backend while agents perform reasoning and tools or MCP servers provide actions and data access.',
   },
   {
     title: 'Notion as an AI knowledge layer',
@@ -224,10 +188,5 @@ window.MILESTONES = [
       note: 'Shipped it, then said it out loud. 🚀',
       image: 'attachments/readcraft-plugin-released.jpg',
     },
-  },
-  {
-    title: 'From AI user to AI workflow builder',
-    date: '2025 - Present',
-    description: 'Progressed from using AI for individual shortcuts to building context-aware workflows, reusable skills, engineering harnesses, design and localization automation, multi-agent systems and structured AI product concepts.',
   },
 ];
