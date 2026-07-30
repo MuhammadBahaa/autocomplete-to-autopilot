@@ -240,8 +240,36 @@
     return [month, year];
   }
 
-  var items = data.map(function (m, i) { return { m: m, num: i + 1 }; });
-  if (cfg.newestFirst) items.reverse();
+  // The timeline's order always comes from each entry's own `date` string,
+  // never from where it sits in milestones.js — so entries never need manual
+  // chronological placement. A range like 'X - Y' anchors on the start of
+  // the range; 'Late'/'Early'/'Mid' nudge a month-only date within its
+  // month; unparseable or tied dates fall back to array order (Array#sort
+  // is spec-stable), which is why ties keep the order they were added in.
+  var MONTH_NUM = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12 };
+  function dateSortKey(dateStr) {
+    function num(year, monthName, day) {
+      var mi = MONTH_NUM[String(monthName).slice(0, 3).toLowerCase()] || 1;
+      return parseInt(year, 10) * 10000 + mi * 100 + parseInt(day, 10);
+    }
+    var start = String(dateStr || '').trim().split(/\s+-\s+/)[0].trim();
+    var day = 15;
+    var fuzzy = start.match(/^(late|early|mid)\s+(.+)$/i);
+    if (fuzzy) {
+      day = /^late$/i.test(fuzzy[1]) ? 25 : /^early$/i.test(fuzzy[1]) ? 5 : 15;
+      start = fuzzy[2];
+    }
+    var m;
+    if ((m = start.match(/^(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})$/))) return num(m[3], m[2], m[1]);
+    if ((m = start.match(/^([A-Za-z]+)\s+(\d{1,2}),?\s+(\d{4})$/))) return num(m[3], m[1], m[2]);
+    if ((m = start.match(/^([A-Za-z]+)\s+(\d{4})$/))) return num(m[2], m[1], day);
+    if ((m = start.match(/^(\d{4})$/))) return num(m[1], 'jan', 1);
+    return 0;
+  }
+
+  var sorted = data.slice().sort(function (a, b) { return dateSortKey(a.date) - dateSortKey(b.date); });
+  if (cfg.newestFirst) sorted.reverse();
+  var items = sorted.map(function (m, i) { return { m: m, num: i + 1 }; });
 
   var seen = {};
   var yearOrder = [];

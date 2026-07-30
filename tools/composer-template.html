@@ -340,7 +340,32 @@
 <script>
 (function () {
   var $ = function (id) { return document.getElementById(id); };
-  var EXISTING = Array.isArray(window.EXISTING) ? window.EXISTING : [];
+
+  // Same date-based ordering as the live site (index.html) — order in
+  // milestones.js doesn't matter, so the edit list is sorted here too,
+  // keeping its numbering consistent with what's actually on the page.
+  var MONTH_NUM = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12 };
+  function dateSortKey(dateStr) {
+    function num(year, monthName, day) {
+      var mi = MONTH_NUM[String(monthName).slice(0, 3).toLowerCase()] || 1;
+      return parseInt(year, 10) * 10000 + mi * 100 + parseInt(day, 10);
+    }
+    var start = String(dateStr || '').trim().split(/\s+-\s+/)[0].trim();
+    var day = 15;
+    var fuzzy = start.match(/^(late|early|mid)\s+(.+)$/i);
+    if (fuzzy) {
+      day = /^late$/i.test(fuzzy[1]) ? 25 : /^early$/i.test(fuzzy[1]) ? 5 : 15;
+      start = fuzzy[2];
+    }
+    var m;
+    if ((m = start.match(/^(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})$/))) return num(m[3], m[2], m[1]);
+    if ((m = start.match(/^([A-Za-z]+)\s+(\d{1,2}),?\s+(\d{4})$/))) return num(m[3], m[1], m[2]);
+    if ((m = start.match(/^([A-Za-z]+)\s+(\d{4})$/))) return num(m[2], m[1], day);
+    if ((m = start.match(/^(\d{4})$/))) return num(m[1], 'jan', 1);
+    return 0;
+  }
+  var EXISTING = (Array.isArray(window.EXISTING) ? window.EXISTING : [])
+    .slice().sort(function (a, b) { return dateSortKey(a.date) - dateSortKey(b.date); });
   var fields = ['f-title', 'f-date', 'f-desc', 'f-att-file', 'f-att-note', 'f-cert-title',
     'f-st-skills', 'f-st-plugins', 'f-st-agents', 'f-st-commands', 'f-st-mcps', 'f-st-courses'];
   var KEY = 'milestone-composer-draft-v3';
@@ -440,7 +465,7 @@
       lines.push('');
       lines.push(POLISH.replace('My rough input', 'My edited values') + ' Only apply what actually changed, and re-sort chronologically if the date changed.');
     } else {
-      lines.push('Add a milestone to my AI Milestones site (repo MuhammadBahaa/autocomplete-to-autopilot, data file milestones.js). Insert it at the right chronological position.');
+      lines.push('Add a milestone to my AI Milestones site (repo MuhammadBahaa/autocomplete-to-autopilot, data file milestones.js). The page sorts entries by date automatically at render time, so just append the new entry — no need to find its chronological position.');
       lines.push('');
       lines.push(POLISH);
     }

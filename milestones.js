@@ -1,6 +1,8 @@
 /* =============================================================
    YOUR MILESTONES LIVE HERE — this is the only file you edit.
-   Add new entries at the BOTTOM of the list (newest last).
+   Order in this file doesn't matter — the page sorts every entry by
+   its own `date` string at render time, so just add new entries
+   anywhere (the bottom is the easiest place to find again).
 
    Copy this template, paste it just above the closing ]; and
    fill it in:
