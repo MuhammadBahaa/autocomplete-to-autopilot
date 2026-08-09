@@ -88,11 +88,6 @@ window.MILESTONES = [
     },
   },
   {
-    title: 'Claude Code adoption',
-    date: 'Jun 2026 - Present',
-    description: 'Adopted Claude Pro and Claude Code as core engineering tools. Practised CLAUDE.md project initialization, file-based context, plan mode, implementation mode, terminal workflows, documentation lookup and repository-level development.',
-  },
-  {
     title: 'Claude Cowork, Code, Skills and Plugins course',
     date: 'Jun 29, 2026',
     description: 'Completed the Udemy course Claude - Master Claude Cowork, Claude Code, Skills & Plugins, continuing the same practical thread: putting AI inside real engineering work rather than beside it. The course covered Claude Code as a terminal-based agentic coding tool, skills as focused instructions an agent loads only when a workflow calls for them, plugins as distributable bundles of skills, commands, agents and MCP servers, and Cowork as an agentic workspace for everyday tasks outside the editor. The lasting value was less the tools themselves than the structure around them — AI-assisted code review, engineering workflow automation, reusable skills and plugins, agentic development workflows and automating daily tasks with Cowork.',
@@ -107,11 +102,6 @@ window.MILESTONES = [
     date: 'Jun 2026',
     description: 'Revamped the Android Figma design extractor into a generic, reusable and ledger-first workflow. Reduced the main agent body from roughly 298 lines to about 104 lines and moved approximately 210 lines of detailed guidance into four focused reference files.',
     stats: { agents: 1 },
-  },
-  {
-    title: 'Ledger-first Figma extraction',
-    date: 'Jun 2026',
-    description: 'Introduced a ledger-only operating mode for extracting structured Figma information before implementation. The workflow standardized token rules, asset handling, string extraction and build-ready design brief generation.',
   },
   {
     title: 'Platform-agnostic Figma Design QA skill',
@@ -138,48 +128,9 @@ window.MILESTONES = [
     stats: { skills: 1 },
   },
   {
-    title: 'Translation environment setup skill',
-    date: 'Jun 2026 - Jul 2026',
-    description: 'Created a setup and repair skill that checks whether the translation environment is correctly configured and fixes missing or invalid setup requirements.',
-    stats: { skills: 1 },
-  },
-  {
-    title: 'Translation automation scripts',
-    date: 'Jun 2026 - Jul 2026',
-    description: 'Implemented scripts for environment checking, repository setup, CSV retrieval, translation search, CSV validation, local Android string generation and merge-request creation.',
-  },
-  {
-    title: 'Neo merge-request and remote-config skills',
-    date: '15 Jun 2026',
-    description: 'Grew the Neo Android plugin past translations into everyday app work. One skill opens or updates a merge request through a fixed description template, refusing to run from a protected branch or from the wrong checkout, and blocking a push until unit tests and static analysis pass. Another captures the project’s remote-config pattern so a new feature flag lands with the correct default, the right accessor type for its value and a named handoff for the server-side key — the part that is easy to forget and leaves a flag dead on arrival.',
-    stats: { skills: 2, commands: 2 },
-  },
-  {
     title: 'Multi-agent engineering workflow',
     date: 'Jul 2026 - Present',
     description: 'Started structuring engineering workflows that assign different tasks to Claude, Codex and Copilot according to their strengths, instead of expecting one agent to handle planning, implementation, review and validation equally well.',
-  },
-  {
-    title: 'Notion as an AI knowledge layer',
-    date: 'Jul 2026',
-    description: 'Adopted Notion Plus and Notion AI and positioned Notion as the knowledge and planning layer for a personal Life OS supported by AI agents.',
-  },
-  {
-    title: 'Life OS master-agent design',
-    date: 'Jul 18, 2026',
-    description: 'Designed a Life OS master agent with Notion as the planning layer. The design covers course planning, work planning, daily and weekly planning, reviews, replanning, startup behaviour and confirmation requirements before making changes.',
-    stats: { agents: 1 },
-  },
-  {
-    title: 'Life OS implementation plan',
-    date: 'Jul 18, 2026',
-    description: 'Created an implementation plan for the Life OS agent with verified Notion mappings, seven operating modes, confirmation-gated writes, Todoist as the execution layer and evaluation scenarios for planning and replanning workflows.',
-  },
-  {
-    title: 'Day and week planning skills',
-    date: 'Jul 21, 2026',
-    description: 'Turned the Life OS design into a working planning plugin sitting on top of the Notion knowledge layer: four skills that build a realistic day from calendar and task inputs, rebuild the remainder of a day after a delay or an interruption, close the day by deciding which unfinished work is a deliberate carryover, and plan a week as three priorities with time actually attached. What made them useful was refusing to flatter the input — an overloaded day is shown as trade-offs rather than a schedule where everything fits, and a review treats a missed block as evidence for the next plan rather than a verdict on the last one.',
-    stats: { skills: 4, plugins: 1 },
   },
   {
     title: 'Fixing at the right scope',
