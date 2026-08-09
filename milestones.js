@@ -219,4 +219,16 @@ window.MILESTONES = [
       image: 'attachments/figma-mcp-comments.png',
     },
   },
+  {
+    title: 'Figma craft packaged as an installable plugin',
+    date: '4 Aug 2026',
+    description: 'Closed the loop on the Figma work by writing the piece that was missing \u2014 a skill that builds a design system from source files \u2014 and packaging all three into one installable plugin alongside the design-QA and implementation-comparison skills. The packaging turned out to be the harder half. Each skill had grown up quietly assuming the repository around it, and making them install standalone meant hunting down every one of those assumptions and cutting it. Writing a skill and making a skill portable are two different disciplines, and only the second one gets tested by someone else installing it.',
+    stats: { skills: 1, plugins: 1 },
+  },
+  {
+    title: 'Built and shipped an MCP platform',
+    date: '5 Aug 2026',
+    description: 'Went from consuming MCP servers to running one: a reusable service foundation carrying figma-craft as its first server, deployed behind a Traefik edge. The part worth keeping was the authentication. A shared bearer token has to be handed out, rotated, and eventually leaks \u2014 so the login moved into the browser over OAuth instead, and a client now connects with a URL and nothing else. Removing a class of problem beats managing it, and that only became obvious after building the version that managed it.',
+    stats: { mcps: 1 },
+  },
 ];

@@ -408,15 +408,26 @@
     var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     Array.prototype.forEach.call(statsEl.querySelectorAll('.stat-num'), function (el) {
       var total = parseInt(el.getAttribute('data-total'), 10);
-      if (reduceMotion || !window.requestAnimationFrame) { el.textContent = total; return; }
+      function settle() { el.textContent = total; }
+      if (reduceMotion || !window.requestAnimationFrame) { settle(); return; }
+
       var start = null;
       function tick(ts) {
         if (start === null) start = ts;
         var t = Math.min(1, (ts - start) / 800);
-        el.textContent = Math.round(total * (1 - Math.pow(1 - t, 3)));
-        if (t < 1) requestAnimationFrame(tick);
+        if (t < 1) {
+          el.textContent = Math.round(total * (1 - Math.pow(1 - t, 3)));
+          requestAnimationFrame(tick);
+        } else {
+          settle();
+        }
       }
       requestAnimationFrame(tick);
+
+      // requestAnimationFrame never runs while the tab is hidden, which left
+      // every counter reading 0 for anyone who opened the page in a background
+      // tab. The timer outlives that and settles on the real total.
+      setTimeout(settle, 1200);
     });
   }
 })();
