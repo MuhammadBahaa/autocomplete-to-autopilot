@@ -14,9 +14,14 @@ All data lives in one file: [milestones.js](milestones.js). Open it, copy the te
 {
   title: 'What you achieved',
   date: '23 Jul 2026',            // day is optional: 'Jul 2026' works too
-  description: 'One or two sentences about what you did and learned.',
+  description: 'Two or three sentences about what you did and learned.',
 },
 ```
+
+**House rules for every entry:**
+
+- **Description length is 3 to 5 lines** as rendered on the card — roughly 200–440 characters. Shorter than 200 reads thin; longer than 440 spills past five lines. Line count is measured at desktop width, so a phone wraps the same text to more lines and that's fine.
+- **A milestone about a single skill is titled `<skill-name> Skill`**, using the skill's own name (`daily-review Skill`, `clean-architecture Skill`). Release, packaging and course entries keep a descriptive title.
 
 Optional per entry: `status: 'done' | 'progress' | 'planned'` adds a status pill (`planned` renders dimmed), `cvWorthy: true` adds a gold ★ badge, `attachment: { file, note, image }` shows the screenshot as a clickable thumbnail that opens full-size (`image` must point to a file in [attachments/](attachments/); `file` only names it for the alt text), `certificate: { title, image }` shows a certificate as a framed image view on the card (click to zoom), and `stats: { skills: 2, plugins: 1 }` counts what the milestone itself produced (keys: skills, plugins, agents, commands, mcps, courses) and feeds the toolbox strip at the top of the page — leave it out for milestones that built nothing countable. Without them, entries are plain milestones.
 

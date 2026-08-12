@@ -454,7 +454,7 @@
       'Their base64 data URLs are too long for this link — the full request, with the base64 block(s), is on my clipboard. Read it with `pbpaste` and take the block(s) from there.'];
   }
   var FOOTER = 'Finally: verify locally, push, confirm the live URL, and rebuild + republish the Milestone Composer snapshot (tools/build-composer.mjs).';
-  var POLISH = 'My rough input — please: correct my English, rephrase it in the site’s voice, and expand the description using your own knowledge of the tools/concepts I mention (stay accurate; do not invent personal claims, metrics, or results I didn’t state):';
+  var POLISH = 'My rough input — please: correct my English, rephrase it in the site’s voice, and expand the description using your own knowledge of the tools/concepts I mention (stay accurate; do not invent personal claims, metrics, or results I didn’t state). House rules: every description renders as 3–5 lines on the card (roughly 200–440 characters — trim or expand to fit), and a milestone whose subject is one skill is titled "<skill-name> Skill" using the skill’s own name:';
 
   function buildRequest(compact) {
     var orig = mode.type === 'edit' ? EXISTING[mode.index] : null;

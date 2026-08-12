@@ -10,8 +10,17 @@
    {
      title: 'What you achieved',
      date: '23 Jul 2026',            // day is optional: 'Jul 2026' works too
-     description: 'One or two sentences about what you did and learned.',
+     description: 'Two or three sentences about what you did and learned.',
    },
+
+   HOUSE RULES — these hold for every entry:
+     · description length: 3 to 5 lines as rendered on the card, which is
+       roughly 200-440 characters. Under 200 reads thin, over 440 spills past
+       five lines. (Line count is measured at desktop width; a phone wraps
+       the same text to more lines, and that's expected.)
+     · a milestone whose subject is a single skill is titled
+       '<skill-name> Skill' — the skill's own name, e.g. 'daily-review Skill'.
+       Release, packaging and course entries keep a descriptive title.
 
    Optional per entry:
      status: 'done' | 'progress' | 'planned' — adds a status pill
@@ -55,7 +64,7 @@ window.MILESTONES = [
   {
     title: 'AI and Developer Productivity course',
     date: 'Mar 15, 2026',
-    description: 'Completed the LinkedIn Learning course AI and Developer Productivity, covering the practical application of artificial intelligence across everyday software development work — assisted code generation, refactoring, review, documentation and testing — and how those capabilities translate into developer productivity rather than novelty. The useful framing was treating each area as a specific kind of friction a model can absorb: the scaffolding and boilerplate that would otherwise be typed out by hand, a second pass over a change before a human reviewer sees it, and the documentation and test coverage that tend to be written last and trimmed first. Early enough in the timeline to set the expectation that AI belongs inside the normal development loop rather than alongside it.',
+    description: 'Completed the LinkedIn Learning course, covering AI across everyday development work — assisted code generation, refactoring, review, documentation and testing. The useful framing was treating each area as a specific kind of friction a model can absorb: the boilerplate that would otherwise be typed by hand, the second pass before a human reviewer sees a change, and the tests and docs that get written last and trimmed first.',
     stats: { courses: 1 },
     certificate: {
       title: 'AI and Developer Productivity',
@@ -65,12 +74,12 @@ window.MILESTONES = [
   {
     title: 'Discovery of agent skills',
     date: 'Late Mar 2026',
-    description: 'Discovered the agent skill concept and began moving beyond large context files toward reusable, focused instructions that agents could load only when a specific workflow was required.',
+    description: 'Discovered the agent skill concept and began moving beyond large context files toward reusable, focused instructions an agent loads only when a specific workflow calls for them. The shift was from telling a model everything up front to letting it pull in what the task actually needs.',
   },
   {
     title: 'Getting started with Cursor',
     date: '4 Apr 2026',
-    description: 'Signed up for Cursor Pro and started coding in it alongside GitHub Copilot. Anysphere’s AI-native fork of VS Code added Tab autocomplete, Cmd+K inline edits and codebase-aware chat next to Copilot’s inline completions. It was also the first real step toward context awareness: instead of pasting a snippet into a chat window, the editor could index the repository and pull in the files, symbols and documentation a change actually touched — and the quality of an answer turned out to depend less on the wording of the prompt than on what the model was allowed to see.',
+    description: 'Signed up for Cursor Pro and started coding in it alongside GitHub Copilot, adding Tab autocomplete, Cmd+K inline edits and codebase-aware chat. It was the first real step toward context awareness: the editor could index the repository instead of working from a pasted snippet — and answer quality turned out to depend less on the wording of the prompt than on what the model was allowed to see.',
     attachment: {
       file: 'welcome-to-cursor.eml',
       note: 'Receipt attached — no going back after this one.',
@@ -80,7 +89,7 @@ window.MILESTONES = [
   {
     title: 'Moving in with Claude',
     date: '4 Jun 2026',
-    description: 'Subscribed to Claude Pro. The welcome email promised a first commit within five minutes — an accurate forecast, judging by the rest of this timeline.',
+    description: 'Subscribed to Claude Pro and started working in Claude Code from the terminal. The welcome email promised a first commit within five minutes — an accurate forecast, judging by how much of the rest of this timeline ended up being built with it.',
     attachment: {
       file: 'welcome-to-claude-code.eml',
       note: '“Your Claude Code journey starts now.” — it really did. 🚀',
@@ -90,7 +99,7 @@ window.MILESTONES = [
   {
     title: 'Claude Cowork, Code, Skills and Plugins course',
     date: 'Jun 29, 2026',
-    description: 'Completed the Udemy course Claude - Master Claude Cowork, Claude Code, Skills & Plugins, continuing the same practical thread: putting AI inside real engineering work rather than beside it. The course covered Claude Code as a terminal-based agentic coding tool, skills as focused instructions an agent loads only when a workflow calls for them, plugins as distributable bundles of skills, commands, agents and MCP servers, and Cowork as an agentic workspace for everyday tasks outside the editor. The lasting value was less the tools themselves than the structure around them — AI-assisted code review, engineering workflow automation, reusable skills and plugins, agentic development workflows and automating daily tasks with Cowork.',
+    description: 'Completed the Udemy course, continuing the same practical thread: putting AI inside real engineering work rather than beside it. It covered Claude Code as a terminal-based agentic tool, skills as focused instructions loaded only when a workflow calls for them, plugins as distributable bundles, and Cowork for everyday tasks outside the editor. The structure around the tools mattered more than the tools.',
     stats: { courses: 1 },
     certificate: {
       title: 'Claude - Master Claude Cowork, Claude Code, Skills & Plugins',
@@ -173,13 +182,13 @@ window.MILESTONES = [
   {
     title: 'Figma craft packaged as an installable plugin',
     date: '4 Aug 2026',
-    description: 'The idea had been waiting since 8 June, when a design-versus-implementation review was done by hand on a single Android screen and produced a table so dense it needed a second, plainer table to explain itself. Two things came out of that afternoon and both survived into the shipped plugin: that the review was a repeatable process rather than a one-off, and that designer-side issues belong in a list of their own, apart from code-side ones, because the two go to different people. This milestone closed the loop \u2014 the last missing skill, one that builds a design system from source files, and all three packaged into a single installable plugin. The packaging turned out to be the harder half. Each skill had grown up quietly assuming the repository around it, and making them install standalone meant hunting down every one of those assumptions and cutting it. Writing a skill and making a skill portable are two different disciplines, and only the second one gets tested by someone else installing it.',
+    description: 'The idea had waited since 8 June, when a design-versus-implementation review done by hand produced a table so dense it needed a second table to explain itself. Two things survived into the shipped plugin: the review was a repeatable process, and designer-side issues belong in a list of their own because they go to different people. Packaging was the harder half \u2014 each skill had quietly assumed the repository around it.',
     stats: { skills: 1, plugins: 1 },
   },
   {
     title: 'Built and shipped an MCP platform',
     date: '5 Aug 2026',
-    description: 'The idea started on 16 June with a small want: the design-review comment the Figma QA skill already produced should be posted by a server, not by a step inside a skill. Chasing that meant writing a custom action for a Figma MCP server and learning what one actually is from the inside \u2014 and once that was clear, running the whole thing stopped looking out of reach. This is where it landed: a reusable service foundation carrying figma-craft as its first server, deployed behind a Traefik edge. The part worth keeping was the authentication. A shared bearer token has to be handed out, rotated, and eventually leaks \u2014 so the login moved into the browser over OAuth instead, and a client now connects with a URL and nothing else. Removing a class of problem beats managing it, and that only became obvious after building the version that managed it.',
+    description: 'Started on 16 June with a small want: the design-review comment the Figma QA skill already produced should be posted by a server, not by a step inside a skill. It landed as a reusable service foundation carrying figma-craft as its first server, behind a Traefik edge. The part worth keeping was the auth \u2014 a shared bearer token eventually leaks, so login moved into the browser over OAuth and a client now connects with a URL and nothing else.',
     stats: { mcps: 1 },
   },
   {
@@ -239,7 +248,7 @@ window.MILESTONES = [
   {
     title: 'Clean Architecture released as a one-command install',
     date: '10 Aug 2026',
-    description: 'A day after the skill was finished it went out publicly through the marketplace — free, open, and installed with a single command that works across Claude Code, Codex, Cursor, Copilot and Gemini CLI instead of only the agent it happened to be written on. Announcing it forced a plainer account of what it actually does, because the flattering version was easy to write and would not have survived anyone installing it. Not a skill that writes Clean Architecture at a project; one that reads the repository first and lets the project’s conventions win, holds exactly one rule that never bends — dependencies point inward — and stops to ask when the codebase around it already breaks that rule. Flutter, Android, iOS, React Native and Node ship as known stacks, and anything else it learns from the code in front of it. Publishing was also the real test of the portability work: a skill isn’t portable because its author says so, it’s portable the first time it lands in a repository nobody planned for.',
+    description: 'A day after the skill was finished it went out publicly through the marketplace — free, open, and installed with one command across Claude Code, Codex, Cursor, Copilot and Gemini CLI rather than only the agent it was written on. Announcing it forced a plainer account of what it does, because the flattering version would not have survived anyone installing it. Publishing was the real test of the portability work.',
     attachment: {
       file: 'clean-architecture-skill-released.png',
       note: 'One command, five agents, zero setup paragraphs. 🚀',
