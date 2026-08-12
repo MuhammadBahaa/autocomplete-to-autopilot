@@ -189,6 +189,30 @@ window.MILESTONES = [
     stats: { skills: 1 },
   },
   {
+    title: 'Neo merge-request and remote-config skills',
+    date: '15 Jun 2026',
+    description: 'Grew the Neo Android plugin past translations into everyday app work. One skill opens or updates a merge request through a fixed description template, refusing to run from a protected branch or from the wrong checkout, and blocking a push until unit tests and static analysis pass. Another captures the project’s remote-config pattern so a new feature flag lands with the correct default, the right accessor type for its value and a named handoff for the server-side key — the part that is easy to forget and leaves a flag dead on arrival.',
+    stats: { skills: 2 },
+  },
+  {
+    title: 'Translation setup split out into its own skill',
+    date: 'Jun 2026 - Jul 2026',
+    description: 'The translation workflow kept failing for reasons that had nothing to do with translation: an expired token, a VPN that was not connected, a missing clone, a script mirror that had drifted off its release tag. So the environment moved out of the workflow and into a skill of its own. It checks five things in dependency order, repairs the safe ones itself — the clone, the local git exclude, the script mirror — and for the rest names the exact fix instead of failing with a stack trace. It is idempotent on purpose, so the honest answer to “is this broken?” is to run it again. Splitting it out was the part worth keeping: a workflow skill that also owns its environment ends up spending most of its instructions on the day the environment is wrong, which is never the day it was written for.',
+    stats: { skills: 1 },
+  },
+  {
+    title: 'Planning skills that argue with an overloaded day',
+    date: '17 Jul 2026 - 21 Jul 2026',
+    description: 'Four skills for the work that happens before any code: closing a day, planning a week, building a day out of calendar and task inputs, and rebuilding the rest of one after a delay or an interruption. They arrived in that order, which was not the order I expected — the review and the weekly pass came first, and the day-builder that feeds them came four days later. What they share is a refusal to flatter the input. An overloaded day comes back as trade-offs and a “does not fit today” list rather than a schedule where everything somehow fits; capacity is counted after breaks, transitions and a real buffer; a week is three outcomes with hours attached instead of a wish list, and everything else is parked out loud rather than quietly dropped. A missed block is treated as evidence for the next plan, not a verdict on the last one. The rule that took longest to get right had nothing to do with planning: nothing is written to a calendar, a task list or a plan file until the exact content has been shown and approved in a later turn, and every write is read back before it counts as done. Being told up front to “just save it” is intent, not approval of something nobody has seen yet.',
+    stats: { skills: 4 },
+  },
+  {
+    title: 'One command from empty folder to a shop on the Play Store',
+    date: '28 Jul 2026',
+    description: 'A client ships one Android app as many branded pharmacy shops, each with its own submodule, build flavour, signing key, Firebase app and store listing. Standing a new one up was a day of order-dependent work where a single missed step surfaced much later as a broken build or an unmergeable branch. This skill collapses it into one command: scaffold the submodule and its assets, create the remote project, register the Firebase app, generate the signing key, push, wire it into the base app, open the merge request, build the bundle and upload it — stopping only at the few steps a human genuinely has to do in a console. The same skill covers the smaller job too: rebranding one existing shop’s icons, splash, colours, strings and endpoint. Two things stuck. The pipeline has to fail loudly at the moment a branch is cut from the wrong base, because three steps later the same mistake arrives disguised as a merge conflict and gets debugged as one. And a one-command workflow still owes you an honest account of what it did not do — every run ends with a table of the real values it produced, with the manual leftovers as their own flagged rows.',
+    stats: { skills: 1 },
+  },
+  {
     title: 'Clean Architecture released as a one-command install',
     date: '10 Aug 2026',
     description: 'A day after the skill was finished it went out publicly through the marketplace — free, open, and installed with a single command that works across Claude Code, Codex, Cursor, Copilot and Gemini CLI instead of only the agent it happened to be written on. Announcing it forced a plainer account of what it actually does, because the flattering version was easy to write and would not have survived anyone installing it. Not a skill that writes Clean Architecture at a project; one that reads the repository first and lets the project’s conventions win, holds exactly one rule that never bends — dependencies point inward — and stops to ask when the codebase around it already breaks that rule. Flutter, Android, iOS, React Native and Node ship as known stacks, and anything else it learns from the code in front of it. Publishing was also the real test of the portability work: a skill isn’t portable because its author says so, it’s portable the first time it lands in a repository nobody planned for.',
