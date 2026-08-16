@@ -19,8 +19,9 @@
        five lines. (Line count is measured at desktop width; a phone wraps
        the same text to more lines, and that's expected.)
      · a milestone whose subject is a single skill is titled
-       '<skill-name> Skill' — the skill's own name, e.g. 'daily-review Skill'.
-       Release, packaging and course entries keep a descriptive title.
+       'Create <skill-name> Skill' — the skill's own name in the middle,
+       e.g. 'Create daily-review Skill'. Release, packaging and course
+       entries keep a descriptive title.
 
    Optional per entry:
      status: 'done' | 'progress' | 'planned' — adds a status pill
@@ -113,13 +114,13 @@ window.MILESTONES = [
     stats: { agents: 1 },
   },
   {
-    title: 'figma-design-qa Skill',
+    title: 'Create figma-design-qa Skill',
     date: 'Jun 2026',
     description: 'Reviews a Figma design before any code is written, on any platform. Flags Arabic/English parity gaps, legacy and missing tokens, unmappable values and accessibility minimums — and can post the issues back onto the frames.',
     stats: { skills: 1 },
   },
   {
-    title: 'figma-implementation-qa Skill',
+    title: 'Create figma-implementation-qa Skill',
     date: 'Jun 2026',
     description: 'Compares existing UI code against its Figma design, with the stack detected from the repo. Read-only until the fixes are approved, and it reports designer-side issues apart from code-side ones, because the two go to different people.',
     stats: { skills: 1 },
@@ -131,7 +132,7 @@ window.MILESTONES = [
     stats: { plugins: 1, agents: 1, commands: 3 },
   },
   {
-    title: 'neo-translations Skill',
+    title: 'Create neo-translations Skill',
     date: 'Jun 2026 - Jul 2026',
     description: 'Manages user-facing strings through the shared central translations file: checks whether a string already exists before adding one, drafts the other languages, and generates the Android strings.xml locally.',
     stats: { skills: 1 },
@@ -142,7 +143,7 @@ window.MILESTONES = [
     description: 'Started structuring engineering workflows that assign different tasks to Claude, Codex and Copilot according to their strengths, instead of expecting one agent to handle planning, implementation, review and validation equally well.',
   },
   {
-    title: 'fixing-at-the-right-scope Skill',
+    title: 'Create fixing-at-the-right-scope Skill',
     date: 'Jul 21, 2026',
     description: 'Split out of the client plugin, since the judgement was never client-specific. Given a root cause already understood, it decides where the fix belongs — and pushes back on the one-line change to shared code that repairs one screen and quietly changes every other caller.',
     stats: { skills: 1, plugins: 1 },
@@ -192,55 +193,55 @@ window.MILESTONES = [
     stats: { mcps: 1 },
   },
   {
-    title: 'clean-architecture Skill',
+    title: 'Create clean-architecture Skill',
     date: '9 Aug 2026',
     description: 'Implements or refactors a feature in Clean Architecture layers on any stack. It reads the project’s own conventions first and lets them win; the one rule it never bends is that dependencies point inward, and it stops to ask when the codebase already breaks it.',
     stats: { skills: 1 },
   },
   {
-    title: 'neo-create-mr Skill',
+    title: 'Create neo-create-mr Skill',
     date: '15 Jun 2026',
     description: 'Pushes the current app branch and opens or updates a merge request through a fixed description template. Refuses to run from a protected branch, and blocks the push until unit tests and static analysis pass.',
     stats: { skills: 1 },
   },
   {
-    title: 'neo-remote-config Skill',
+    title: 'Create neo-remote-config Skill',
     date: '15 Jun 2026',
     description: 'Captures the app’s remote-config pattern so a new feature flag lands with the right default, the right accessor type, and a named handoff for the server-side key — the step that is easy to forget and leaves a flag dead on arrival.',
     stats: { skills: 1 },
   },
   {
-    title: 'neo-translations-setup Skill',
+    title: 'Create neo-translations-setup Skill',
     date: 'Jun 2026 - Jul 2026',
     description: 'Sets up or repairs the translations environment: credentials, VPN reach, auth, the local clone and the pinned scripts. Idempotent, and it fixes the safe checks itself instead of only reporting them.',
     stats: { skills: 1 },
   },
   {
-    title: 'daily-review Skill',
+    title: 'Create daily-review Skill',
     date: '17 Jul 2026',
     description: 'Closes the day. Sorts unfinished work into carry forward, reschedule, delegate or drop instead of rolling all of it into tomorrow, and treats a missed block as evidence for the next plan rather than a verdict on the last one.',
     stats: { skills: 1 },
   },
   {
-    title: 'week-planner Skill',
+    title: 'Create week-planner Skill',
     date: '17 Jul 2026',
     description: 'Plans the week as three outcomes with hours attached, not a wish list. Everything else is parked out loud, and when commitments pass roughly 60% of the available time the scope gets cut before the week starts.',
     stats: { skills: 1 },
   },
   {
-    title: 'plan-your-day Skill',
+    title: 'Create plan-your-day Skill',
     date: '21 Jul 2026',
     description: 'Turns calendar and task inputs into a day that actually fits. Capacity is counted after breaks, transitions and buffer, and overflow goes into a visible “does not fit today” list rather than being compressed away.',
     stats: { skills: 1 },
   },
   {
-    title: 'replan-your-day Skill',
+    title: 'Create replan-your-day Skill',
     date: '21 Jul 2026',
     description: 'Rebuilds the rest of the day after a delay, interruption or cancellation, moving only what the new constraint requires. Protected transitions and buffer survive the rebuild — work is dropped before they are.',
     stats: { skills: 1 },
   },
   {
-    title: 'shop-creation Skill',
+    title: 'Create shop-creation Skill',
     date: '28 Jul 2026',
     description: 'One command from empty folder to a live shop for Mauve’s ApoApp: scaffold, remote project, Firebase, signing key, wire-up, merge request, build and Play upload. Also covers rebranding one existing shop.',
     stats: { skills: 1 },
