@@ -255,4 +255,14 @@ window.MILESTONES = [
       image: 'attachments/clean-architecture-skill-released.png',
     },
   },
+  {
+    title: 'OpenAI Codex Masterclass course',
+    date: 'Aug 16, 2026',
+    description: 'Completed the Udemy masterclass on OpenAI Codex — 11.5 hours on the agent that already shares the rotation with Claude and Copilot. Taking it deliberately rather than picking it up in passing was the point: splitting work across agents only holds up if each one’s defaults, strengths and failure modes are known first-hand instead of assumed from the one used most.',
+    stats: { courses: 1 },
+    certificate: {
+      title: 'The Complete OpenAI Codex Masterclass 2026',
+      image: 'attachments/the-complete-openai-codex-masterclass-2026-certificate.jpg',
+    },
+  },
 ];
