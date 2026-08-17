@@ -22,6 +22,12 @@ Don't assume the deploy landed; check it:
 curl -s "https://muhammadbahaa.github.io/autocomplete-to-autopilot/milestones.js?cb=$RANDOM" | grep 'the new title'
 ```
 
+Grep the code form, never the bare key name. The header comment inside
+`milestones.js` documents every optional key, so `grep cvWorthy` matches that
+comment on *any* deploy and reports success against the copy already live.
+Anchor on the indented code and check the count instead —
+`grep -c '^    cvWorthy: true,'` — or match on new prose that exists nowhere else.
+
 ## Run locally
 
 ```bash
@@ -57,6 +63,13 @@ Rules that are easy to get wrong:
   building it, and never repeat a count another entry already claims.
 - **Certificates are counted from the `certificate` field itself**, never from
   `stats` — there is no `certificates` stat key.
+- **`cvWorthy: true` is deliberately scarce.** It prints the gold ★ badge and
+  turns that entry's dot on the timeline rail accent-coloured. Six entries carry
+  it — the measurable delivery, the production tooling, the first public release,
+  the team adoption, the platform, the public distribution. It marks shipped
+  outcomes, not good days; spreading it further is what would break it. The badge
+  text lives in `index.html` and reads "★ CV-worthy", so relabelling it is a
+  one-string change there, not a data change.
 
 ## Attachments and certificates
 
