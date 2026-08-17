@@ -75,7 +75,7 @@ window.MILESTONES = [
   {
     title: 'Discovery of context files',
     date: '1 Apr 2026',
-    description: 'Started understanding the idea of writing project context into a file the agent reads on its own — .cursorrules in Cursor, CLAUDE.md for Claude Code. Instead of re-explaining the stack, the conventions and the build steps in every prompt, they sit in the repository and load with the session. The instructions became part of the project rather than part of each conversation.',
+    description: 'Started understanding the idea of writing project context into a file the agent reads on its own — .cursorrules in Cursor, CLAUDE.md for Claude Code. Applied it on the ApoApp project, where the stack, the conventions and the build steps stopped being re-explained in every prompt and started living in the repository. The instructions became part of the project rather than part of each conversation.',
   },
   {
     title: 'Discovery of agent skills',
