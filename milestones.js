@@ -257,10 +257,9 @@ window.MILESTONES = [
     },
   },
   {
-    title: 'First MCP server, built for Mauve GitLab',
+    title: 'Discovered MCP, starting with Mauve GitLab',
     date: '15 Apr 2026',
-    description: 'Discovered the Model Context Protocol and built a server for Mauve’s GitLab, so issues, merge requests and pipelines could be pulled into the coding workflow instead of pasted in by hand. It was the same lesson the skills taught later, arriving earlier: the model does better work when it can fetch what it needs than when everything is prepared for it up front.',
-    stats: { mcps: 1 },
+    description: 'Discovered the Model Context Protocol and put it to work through a GitLab server pointed at Mauve’s instance, so issues, merge requests and pipelines could be read from inside the editor instead of pasted in by hand. Reading about the protocol explained far less than watching an agent go and fetch its own context for the first time.',
   },
   {
     title: 'OpenAI Codex Masterclass course',
