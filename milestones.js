@@ -73,6 +73,11 @@ window.MILESTONES = [
     },
   },
   {
+    title: 'Discovery of context files',
+    date: '1 Apr 2026',
+    description: 'Started understanding the idea of writing project context into a file the agent reads on its own — .cursorrules in Cursor, CLAUDE.md for Claude Code. Instead of re-explaining the stack, the conventions and the build steps in every prompt, they sit in the repository and load with the session. The instructions became part of the project rather than part of each conversation.',
+  },
+  {
     title: 'Discovery of agent skills',
     date: '1 Apr 2026',
     description: 'Discovered the agent skill concept and began moving beyond large context files toward reusable, focused instructions an agent loads only when a specific workflow calls for them. The shift was from telling a model everything up front to letting it pull in what the task actually needs.',
