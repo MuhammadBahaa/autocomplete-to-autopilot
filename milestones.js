@@ -61,6 +61,7 @@ window.MILESTONES = [
     title: 'Context-aware AI engineering',
     date: 'Jan 2026 - Apr 2026',
     description: 'Moved from isolated prompts to context-aware AI work by giving agents real repository, architecture and business context. Used this approach while driving a large cards refactor covering broad and deeply connected parts of the application, which reached testing with only two reported bugs.',
+    cvWorthy: true,
   },
   {
     title: 'AI and Developer Productivity course',
@@ -134,6 +135,7 @@ window.MILESTONES = [
     title: 'Neo Android translations plugin',
     date: 'Jun 2026 - Jul 2026',
     description: 'Created the Android translations plugin to centralize and automate translation workflows for the Neo Android project. Alongside the skills it bundles slash commands for adding and updating strings and a read-only extractor agent whose only job is to report where a given piece of copy already exists across the shared translation file, so the decision to reuse or create is made against evidence rather than a guess.',
+    cvWorthy: true,
     stats: { plugins: 1, agents: 1, commands: 3 },
   },
   {
@@ -157,6 +159,7 @@ window.MILESTONES = [
     title: 'ReadCraft Plugin Released',
     date: 'Jul 22, 2026',
     description: 'Released the plugin publicly, built around two core capabilities: reviewing skills and plugins with technical improvement suggestions, and helping people read and review complex English skill files more easily. Announced the release publicly, which turned a design concept into a distributed, installable product.',
+    cvWorthy: true,
     stats: { skills: 2, plugins: 1 },
     attachment: {
       file: 'release-announcement.png',
@@ -168,6 +171,7 @@ window.MILESTONES = [
     title: 'Figma skills merged into the shared engineering harness',
     date: 'Jul 30, 2026',
     description: 'The Figma agent revamp — the rebuilt extraction agent, the platform-agnostic design-QA skill and the Android code-versus-Figma comparison skill — finally merged into the team’s shared engineering harness after riding through repeated rebases since mid-June. What had been sitting on a personal branch became something every plugin on the harness, and every engineer using it, could pull in directly.',
+    cvWorthy: true,
     attachment: {
       file: 'engineering-harness-repo.png',
       note: 'Four contributors deep now — not exactly a personal branch anymore.',
@@ -195,6 +199,7 @@ window.MILESTONES = [
     title: 'Built and shipped an MCP platform',
     date: '5 Aug 2026',
     description: 'Started on 16 June with a small want: the design-review comment the Figma QA skill already produced should be posted by a server, not by a step inside a skill. It landed as a reusable service foundation carrying figma-craft as its first server, behind a Traefik edge. The part worth keeping was the auth \u2014 a shared bearer token eventually leaks, so login moved into the browser over OAuth and a client now connects with a URL and nothing else.',
+    cvWorthy: true,
     stats: { mcps: 1 },
   },
   {
@@ -255,6 +260,7 @@ window.MILESTONES = [
     title: 'Clean Architecture released as a one-command install',
     date: '10 Aug 2026',
     description: 'A day after the skill was finished it went out publicly through the marketplace — free, open, and installed with one command across Claude Code, Codex, Cursor, Copilot and Gemini CLI rather than only the agent it was written on. Announcing it forced a plainer account of what it does, because the flattering version would not have survived anyone installing it. Publishing was the real test of the portability work.',
+    cvWorthy: true,
     attachment: {
       file: 'clean-architecture-skill-released.png',
       note: 'One command, five agents, zero setup paragraphs. 🚀',
