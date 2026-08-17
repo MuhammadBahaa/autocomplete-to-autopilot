@@ -29,7 +29,7 @@ The toolbox strip also shows a Certificates tile, counted straight from the `cer
 
 Three ways to do it, pick whichever is closest to hand:
 
-1. **Ask Claude Code** — "add a milestone: finished X on date Y, it's CV-worthy". It edits, commits and pushes; the site updates itself.
+1. **Ask Claude Code** — "add a milestone: finished X on date Y, it's a turning point". It edits, commits and pushes; the site updates itself.
 2. **GitHub web editor** — open `milestones.js` on github.com, press the ✏️ pencil, paste a filled-in template, commit. Works from any device, deploys in ~1 minute.
 3. **Local editor** — edit the file, then `git commit` and `git push`.
 

@@ -68,8 +68,11 @@ Rules that are easy to get wrong:
   it — the measurable delivery, the production tooling, the first public release,
   the team adoption, the platform, the public distribution. It marks shipped
   outcomes, not good days; spreading it further is what would break it. The badge
-  text lives in `index.html` and reads "★ CV-worthy", so relabelling it is a
-  one-string change there, not a data change.
+  text lives in `index.html` and reads "★ Turning point", so relabelling it is a
+  one-string change there, not a data change. The data key is still `cvWorthy`,
+  which no longer matches the label — don't "fix" one to match the other without
+  asking; renaming the key touches `index.html`, every marked entry and all three
+  rule files.
 
 ## Attachments and certificates
 

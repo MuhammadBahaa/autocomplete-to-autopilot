@@ -26,7 +26,7 @@
    Optional per entry:
      status: 'done' | 'progress' | 'planned' — adds a status pill
        ('planned' renders dimmed).
-     cvWorthy: true — adds the gold ★ CV-worthy badge.
+     cvWorthy: true — adds the gold ★ Turning point badge.
      attachment: { file: 'welcome.eml', note: 'a playful caption',
        image: 'attachments/pic.png' } — shows the screenshot as a
        thumbnail at the card's bottom; click to open it full-size.
