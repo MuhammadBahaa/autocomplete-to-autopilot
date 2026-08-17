@@ -267,6 +267,11 @@ window.MILESTONES = [
     description: 'Discovered the Model Context Protocol and put it to work through a GitLab server pointed at Mauve’s instance, so issues, merge requests and pipelines could be read from inside the editor instead of pasted in by hand. Reading about the protocol explained far less than watching an agent go and fetch its own context for the first time.',
   },
   {
+    title: 'Seeing a real workflow on a Backbase project',
+    date: '2 Jun 2026',
+    description: 'Watched a real workflow run end to end for the first time: a Backbase project driven by structure files kept in its own directory, so the agent picked up the shape of the codebase instead of being walked through it. Seeing the whole loop work rather than reading about it pulled the Claude subscription forward — it landed two days later, ahead of the plan.',
+  },
+  {
     title: 'OpenAI Codex Masterclass course',
     date: 'Aug 16, 2026',
     description: 'Completed the Udemy masterclass on OpenAI Codex — 11.5 hours on the agent that already shares the rotation with Claude and Copilot. Taking it deliberately rather than picking it up in passing was the point: splitting work across agents only holds up if each one’s defaults, strengths and failure modes are known first-hand instead of assumed from the one used most.',
