@@ -74,7 +74,7 @@ window.MILESTONES = [
   },
   {
     title: 'Discovery of agent skills',
-    date: 'Late Mar 2026',
+    date: '1 Apr 2026',
     description: 'Discovered the agent skill concept and began moving beyond large context files toward reusable, focused instructions an agent loads only when a specific workflow calls for them. The shift was from telling a model everything up front to letting it pull in what the task actually needs.',
   },
   {
