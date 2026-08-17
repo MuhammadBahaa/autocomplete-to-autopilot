@@ -79,7 +79,7 @@ window.MILESTONES = [
   },
   {
     title: 'Discovery of agent skills',
-    date: '1 Apr 2026',
+    date: '10 Apr 2026',
     description: 'Discovered the agent skill concept and began moving beyond large context files toward reusable, focused instructions an agent loads only when a specific workflow calls for them. The shift was from telling a model everything up front to letting it pull in what the task actually needs.',
   },
   {
@@ -247,8 +247,8 @@ window.MILESTONES = [
   },
   {
     title: 'Create shop-creation Skill',
-    date: '28 Jul 2026',
-    description: 'One command from empty folder to a live shop for Mauve’s ApoApp: scaffold, remote project, Firebase, signing key, wire-up, merge request, build and Play upload. Also covers rebranding one existing shop.',
+    date: '10 Apr 2026',
+    description: 'The first skill built here, written the same day the concept clicked. One command takes an empty folder to a live shop for Mauve’s ApoApp: scaffold, remote project, Firebase, signing key, wire-up, merge request, build and Play upload. It also covers rebranding an existing shop. Building one explained what a skill is for better than reading about it did.',
     stats: { skills: 1 },
   },
   {
