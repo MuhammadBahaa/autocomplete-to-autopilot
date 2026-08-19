@@ -160,7 +160,7 @@ window.MILESTONES = [
   {
     title: 'Figma skills merged into the shared engineering harness',
     date: 'Jul 30, 2026',
-    description: 'The Figma agent revamp — the rebuilt extraction agent, the platform-agnostic design-QA skill and the Android code-versus-Figma comparison skill — finally merged into the team’s shared engineering harness after riding through repeated rebases since mid-June. What had been sitting on a personal branch became something every plugin on the harness, and every engineer using it, could pull in directly.',
+    description: 'The Figma agent revamp — the rebuilt extraction agent, the platform-agnostic design-QA skill and the Android code-versus-Figma comparison skill — finally merged into CoorB’s shared engineering harness after riding through repeated rebases since mid-June. What had been sitting on a personal branch became something every plugin on the harness, and every engineer using it, could pull in directly.',
     cvWorthy: true,
     attachment: {
       file: 'engineering-harness-repo.png',
@@ -171,7 +171,7 @@ window.MILESTONES = [
   {
     title: 'Figma MCP comment workflow',
     date: '21 Jun 2026',
-    description: 'Joined the small team building a Figma MCP server, contributing the piece that posts design-review comments straight back onto Figma frames from inside the coding workflow — closing the loop between implementation and design feedback without switching over to the Figma app.',
+    description: 'Joined the small CoorB team building a Figma MCP server, contributing the piece that posts design-review comments straight back onto Figma frames from inside the coding workflow — closing the loop between implementation and design feedback without switching over to the Figma app.',
     stats: { mcps: 1 },
     attachment: {
       file: 'figma-mcp-comments.png',
