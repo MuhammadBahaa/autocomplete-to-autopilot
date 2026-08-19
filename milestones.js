@@ -140,11 +140,6 @@ window.MILESTONES = [
     stats: { skills: 1 },
   },
   {
-    title: 'Multi-agent engineering workflow',
-    date: 'Jul 2026 - Present',
-    description: 'Started structuring engineering workflows that assign different tasks to Claude, Codex and Copilot according to their strengths, instead of expecting one agent to handle planning, implementation, review and validation equally well.',
-  },
-  {
     title: 'Create fixing-at-the-right-scope Skill',
     date: 'Jul 21, 2026',
     description: 'Split out of the client plugin, since the judgement was never client-specific. Given a root cause already understood, it decides where the fix belongs — and pushes back on the one-line change to shared code that repairs one screen and quietly changes every other caller.',
