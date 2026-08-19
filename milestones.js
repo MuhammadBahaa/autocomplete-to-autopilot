@@ -82,6 +82,7 @@ window.MILESTONES = [
     title: 'Discovery of agent skills',
     date: '10 Apr 2026',
     description: 'Discovered the agent skill concept and began moving beyond large context files toward reusable, focused instructions an agent loads only when a specific workflow calls for them. The shift was from telling a model everything up front to letting it pull in what the task actually needs.',
+    cvWorthy: true,
   },
   {
     title: 'Getting started with Cursor',
@@ -116,14 +117,14 @@ window.MILESTONES = [
   },
   {
     title: 'Create figma-design-qa Skill',
-    date: 'Jun 2026',
-    description: 'Reviews a Figma design before any code is written, on any platform. Flags Arabic/English parity gaps, legacy and missing tokens, unmappable values and accessibility minimums — and can post the issues back onto the frames.',
+    date: '17 Jun 2026',
+    description: 'Built after repeatedly hitting the same handoff problem: design inconsistencies surfacing only after development started, forcing engineers to stop and wait on designer clarification. It moves that review before coding — design-system rules, tokens, AR/EN parity, accessibility — and produces actionable designer feedback. Alongside it came the CoorB harness’s shared Figma QA foundation: extractor, VALUE LEDGER contract, design rules.',
     stats: { skills: 1 },
   },
   {
-    title: 'Create figma-implementation-qa Skill',
-    date: 'Jun 2026',
-    description: 'Compares existing UI code against its Figma design, with the stack detected from the repo. Read-only until the fixes are approved, and it reports designer-side issues apart from code-side ones, because the two go to different people.',
+    title: 'Create android-figma-comparison Skill',
+    date: '17 Jun 2026',
+    description: 'Closes the other side of the Figma workflow: validating the finished Android XML/Compose implementation against the approved design. Genuine code-versus-design mismatches are separated from designer-side issues, so each problem goes to its right owner instead of every visual difference landing as an Android defect. Integrated into the CoorB harness, it connects design validation, Android development and comparison into one lifecycle.',
     stats: { skills: 1 },
   },
   {
