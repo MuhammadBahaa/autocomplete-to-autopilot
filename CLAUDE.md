@@ -12,9 +12,14 @@ other file is support.
 
 ## Shipping
 
-Work directly on `main` and push there. Every push to `main` redeploys the site
-through GitHub Pages automatically — there is no release step and no workflow to
-trigger. It goes live in roughly 20 seconds.
+Every ask ships. Work directly on `main`, push there, and confirm the deploy —
+a change parked on a side branch is not done. A remote session limited to a
+designated working branch still owes the owner a release: push `main` as well
+where the session permits it, and where it doesn't, finish by naming exactly
+which branch holds the completed work so the owner can merge and release it
+straight away. Every push to `main` redeploys the site through GitHub Pages
+automatically — there is no release step and no workflow to trigger. It goes
+live in roughly 20 seconds.
 
 Don't assume the deploy landed; check it:
 
