@@ -61,7 +61,6 @@ window.MILESTONES = [
     title: 'Context-aware AI engineering',
     date: 'Jan 2026 - Apr 2026',
     description: 'Moved from isolated prompts to context-aware AI work by giving agents real repository, architecture and business context. Used this approach while driving a large cards refactor covering broad and deeply connected parts of the application, which reached testing with only two reported bugs.',
-    cvWorthy: true,
   },
   {
     title: 'AI and Developer Productivity course',
