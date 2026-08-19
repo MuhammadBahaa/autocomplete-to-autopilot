@@ -158,7 +158,7 @@ window.MILESTONES = [
     },
   },
   {
-    title: 'Figma skills merged into the shared engineering harness',
+    title: 'CoorB engineering harness contribution',
     date: 'Jul 30, 2026',
     description: 'The Figma agent revamp — the rebuilt extraction agent, the platform-agnostic design-QA skill and the Android code-versus-Figma comparison skill — finally merged into CoorB’s shared engineering harness after riding through repeated rebases since mid-June. What had been sitting on a personal branch became something every plugin on the harness, and every engineer using it, could pull in directly.',
     cvWorthy: true,
