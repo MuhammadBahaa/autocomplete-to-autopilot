@@ -64,10 +64,12 @@ Rules that are easy to get wrong:
 - **Certificates are counted from the `certificate` field itself**, never from
   `stats` — there is no `certificates` stat key.
 - **`cvWorthy: true` is deliberately scarce.** It prints the gold ★ badge and
-  turns that entry's dot on the timeline rail accent-coloured. Six entries carry
-  it — the measurable delivery, the production tooling, the first public release,
-  the team adoption, the platform, the public distribution. It marks shipped
-  outcomes, not good days; spreading it further is what would break it. The badge
+  turns that entry's dot on the timeline rail accent-coloured. Seven entries
+  carry it — the measurable delivery, the workflow seen end to end, the
+  production tooling, the first public release, the team adoption, the platform,
+  the public distribution. It marks shipped outcomes and the rare moment that
+  redirected the journey, not good days; spreading it further is what would
+  break it. The badge
   text lives in `index.html` and reads "★ Turning point", so relabelling it is a
   one-string change there, not a data change. The data key is still `cvWorthy`,
   which no longer matches the label — don't "fix" one to match the other without

@@ -97,11 +97,6 @@ window.MILESTONES = [
     title: 'Moving in with Claude',
     date: '4 Jun 2026',
     description: 'Subscribed to Claude Pro and started working in Claude Code from the terminal. The welcome email promised a first commit within five minutes — an accurate forecast, judging by how much of the rest of this timeline ended up being built with it.',
-    attachment: {
-      file: 'welcome-to-claude-code.eml',
-      note: '“Your Claude Code journey starts now.” — it really did. 🚀',
-      image: 'attachments/welcome-to-claude-code.png',
-    },
   },
   {
     title: 'Claude Cowork, Code, Skills and Plugins course',
@@ -276,6 +271,7 @@ window.MILESTONES = [
     title: 'Seeing a real workflow on a Backbase project',
     date: '2 Jun 2026',
     description: 'Watched a real workflow run end to end for the first time: a Backbase project driven by structure files kept in its own directory, so the agent picked up the shape of the codebase instead of being walked through it. Seeing the whole loop work rather than reading about it pulled the Claude subscription forward — it landed two days later, ahead of the plan.',
+    cvWorthy: true,
   },
   {
     title: 'OpenAI Codex Masterclass course',
